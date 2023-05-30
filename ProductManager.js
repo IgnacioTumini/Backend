@@ -159,32 +159,30 @@ class ProductManager {
   }
 }
 
-// Prueba de funcionamiento, primero, creamos una instancia de ProductManager
-const manager = new ProductManager("Nacho");
+// Prueba de funcionamiento, creamos una instancia de ProductManager
+const manager = new ProductManager("Productos");
 
 // Agregamos productos para poder pobrar:
 
-/*(async function () {
-    await manager.addProduct({
-        title: "Producto 1",
-        description: "Descripción del producto 1",
-        price: 20,
-        thumbnail: "sin imagen",
-        code: "abc123",
-        stock: 6,
-    });
+(async function () {
+  await manager.addProduct({
+    title: "Producto 1",
+    description: "Descripción del producto 1",
+    price: 20,
+    thumbnail: "sin imagen",
+    code: "abc123",
+    stock: 6,
+  });
 
-    await manager.addProduct({
-        title: "Producto 2",
-        description: "Descripción del producto 2",
-        price: 10,
-        thumbnail: "sin imagen",
-        code: "abc1234",
-        stock: 1,
-    });
-
-    
-})();*/
+  await manager.addProduct({
+    title: "Producto 2",
+    description: "Descripción del producto 2",
+    price: 10,
+    thumbnail: "sin imagen",
+    code: "abc1234",
+    stock: 1,
+  });
+})();
 
 // Funcion prueba para  traer todos los productos
 

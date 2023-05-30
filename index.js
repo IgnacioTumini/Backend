@@ -157,7 +157,7 @@ class ProductManager {
   }
 }
 
-const manager = new ProductManager("Nacho");
+const manager = new ProductManager("MANU");
 
 manager.addProduct(
   "Producto 2",
