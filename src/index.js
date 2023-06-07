@@ -1,4 +1,5 @@
-const fs = require("fs");
+import fs from "fs";
+import crypto from "crypto";
 
 function validarCampos(title, description, price, thumbnail, code, stock) {
   let flagError = false;

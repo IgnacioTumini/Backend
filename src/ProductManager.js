@@ -1,6 +1,7 @@
-const fs = require("fs");
+/*const fs = require("fs");*/
+import fs from "fs";
 
-class ProductManager {
+export default class ProductManager {
   constructor(file) {
     this.file = file + ".JSON";
     this.products = [];
@@ -163,7 +164,7 @@ class ProductManager {
 const manager = new ProductManager("Productos");
 
 // Agregamos productos para poder pobrar:
-
+/*
 (async function () {
   await manager.addProduct({
     title: "Producto 1",
@@ -182,7 +183,7 @@ const manager = new ProductManager("Productos");
     code: "abc1234",
     stock: 1,
   });
-})();
+})();*/
 
 // Funcion prueba para  traer todos los productos
 
