@@ -1,12 +1,22 @@
 import express from "express";
 import http from "http";
-import ProductManager from "../src/ProductManager.js";
+import productRouter from "../src/routes/productRoutes.js";
+//import __dirname from "./utils.js";
 
 const app = express();
-const managers = new ProductManager(`../src/Productos`);
 
-let products = await managers.getProducts();
+//app.use(express.static(`${__dirname}/public`));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/products", productRouter);
+
+// LEVANTAR EL SERVIDOR
+app.listen(8080, () => console.log("Servidor up"));
+
+//const server = app.listen(8080, () => console.log("Servidor up"));
+
+/*
 app.get("/products", (req, res) => {
   let query = req.query;
 
@@ -35,7 +45,7 @@ app.get("/products/:pid", (req, res) => {
 
 app.listen(8080, () => console.log("Servidor up"));
 
-/*const servidor = http.createServer((request, response) => {
+const servidor = http.createServer((request, response) => {
   response.end("Mi promer hola desde el backend");
 });
 
