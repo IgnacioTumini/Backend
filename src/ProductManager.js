@@ -95,9 +95,12 @@ export default class ProductManager {
               this.file,
               JSON.stringify(this.products, null, "\t")
             );
-            return { message: "Has actualizado correctamente el producto" };
+            return {
+              status: 200,
+              message: "Has actualizado correctamente el producto",
+            };
           } else {
-            return { error: "Producto no encontrado" };
+            return { status: 404, error: "Producto no encontrado" };
           }
         } else {
           return { error: "base de datos no encontrada" };
@@ -120,13 +123,19 @@ export default class ProductManager {
               this.file,
               JSON.stringify(this.products, null, "\t")
             );
-            console.log("Producto eliminado correctamente");
+            return {
+              status: 200,
+              message: "Su producto de borro correctamente",
+            };
           }
         } else {
-          console.log("Producto no encontrado");
+          return { status: 404, message: "Producto no encontrado" };
         }
       } else {
-        console.log("No existe el archivo, por favor cree uno");
+        return {
+          status: 404,
+          message: "Archivo no encontrado, por favor cree uno",
+        };
       }
     } catch (error) {
       throw new Error("Error: ", error);
