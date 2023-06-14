@@ -5,7 +5,6 @@ export default class ProductManager {
   constructor(file) {
     this.file = file + ".JSON";
     this.products = [];
-    this.nextId = 1;
   }
 
   async addProduct(product) {
@@ -24,30 +23,23 @@ export default class ProductManager {
             !product.code ||
             !product.stock
           ) {
-            console.log("Error: Todos los campos son obligatorios");
-            return;
+            return { error: "Los atributos ingresados no son correctos" };
           }
 
           // Validar que no se repita el campo "code"
           if (this.products.find((p) => p.code === product.code)) {
-            console.log("Error: El código ya existe");
-            return;
+            return { error: "el codigo ya existe" };
           }
-          // Agregar el producto con un id autoincrementable
-          product.id = this.nextId++;
+          product.id = Date.now();
           this.products.push(product);
           await fs.promises.writeFile(
             this.file,
             JSON.stringify(this.products, null, "\t")
           );
         }
-        console.log("Producto agregado correctamente");
+        return { status: 200, message: "Producto añadido con exito" };
       } else {
-        product.id = this.nextId++;
-        await fs.promises.writeFile(
-          this.file,
-          JSON.stringify([product], null, "\t")
-        );
+        return { error: "base de datos no encontrada" };
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -96,18 +88,19 @@ export default class ProductManager {
         if (data) {
           this.products = JSON.parse(data);
           const index = this.products.findIndex((p) => p.id === id);
+
           if (index !== -1) {
             this.products[index] = { ...this.products[index], ...product };
             await fs.promises.writeFile(
               this.file,
               JSON.stringify(this.products, null, "\t")
             );
-            console.log("Has actualizado correctamente el producto");
+            return { message: "Has actualizado correctamente el producto" };
           } else {
-            console.log("Producto no encontrado");
+            return { error: "Producto no encontrado" };
           }
         } else {
-          console.log("No existe el archivo, por favor cree uno");
+          return { error: "base de datos no encontrada" };
         }
       }
     } catch (error) {
