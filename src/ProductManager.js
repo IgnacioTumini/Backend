@@ -71,7 +71,10 @@ export default class ProductManager {
           if (product) {
             return product;
           } else {
-            console.log(`Error: Producto con el id "${id}" no encontrado`);
+            return {
+              status: 404,
+              message: `Error: Producto con el id "${id}" no encontrado`,
+            };
           }
         }
       } else {

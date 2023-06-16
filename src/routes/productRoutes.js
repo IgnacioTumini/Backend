@@ -35,7 +35,7 @@ router.put("/:pid", async (req, res) => {
   res.send(updateProduct);
 });
 
-// delete
+// DELETE PRODUCT BY ID
 router.delete("/:pid", async (req, res) => {
   const id = Number(req.params.pid);
   const productDelete = await PM.removeProduct(id);

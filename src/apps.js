@@ -13,4 +13,4 @@ app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 
 // LEVANTAR EL SERVIDOR
-app.listen(8080, () => console.log("Servidor up"));
+app.listen(8080, () => console.log("Server up"));

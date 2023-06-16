@@ -4,8 +4,9 @@ import ProductManager from "./ProductManager.js";
 const PM = new ProductManager(`../src/Productos`);
 
 export default class CartManager {
-  constructor() {
-    (this.file = file + ".JSON"), (this.carts = []);
+  constructor(file) {
+    this.file = file + ".JSON";
+    this.carts = [];
   }
 
   async createCart() {
@@ -21,8 +22,9 @@ export default class CartManager {
             JSON.stringify(this.carts, null, "\t")
           );
         }
+        return { status: 200, message: "Carrito añadido con exito" };
       } else {
-        return { error: "base de datos no encontrada" };
+        return { Status: 400, error: "Base de datos no encontrada" };
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -35,27 +37,44 @@ export default class CartManager {
         const data = await fs.promises.readFile(this.file, "utf-8");
         if (data) {
           this.carts = JSON.parse(data);
-          const cart = await this.carts.find((c) => c.id == cid);
+          let cart = await this.carts.find((c) => c.id == cid);
           if (cart) {
-            const productExist = PM.getProductById(pid);
-            if (productExist) {
-              const productRepit = await cart.products.find((p) => p.id == pid);
-              if (productRepit) {
-                productExist.quantity += 1;
+            const productExist = await PM.getProductById(pid);
+            if (!productExist.status) {
+              const findProduct = cart.products.find(
+                (product) => product.id == pid
+              );
+              if (findProduct) {
+                const newCart = cart.products.filter((product) => {
+                  if (product.id == pid) {
+                    product.quantity += 1;
+                  }
+                  return product;
+                });
+                cart = newCart;
               } else {
                 cart.products.push({ id: pid, quantity: 1 });
               }
+              const newCarts = this.carts.filter((c) => {
+                if (c.id == cid) {
+                  return cart;
+                }
+                return c;
+              });
+              await fs.promises.writeFile(
+                this.file,
+                JSON.stringify(newCarts, "/t")
+              );
+              return { message: "producto añadido al carrito con exito" };
             }
-            await fs.promises.writeFile(
-              this.file,
-              JSON.stringify(this.carts, null, "\t")
-            );
           } else {
             return {
               status: 400,
-              error: `Error: Producto con el id "${cid}" no fue encontrado`,
+              error: `Error: Carrito con el id "${cid}" no fue encontrado`,
             };
           }
+        } else {
+          return { status: 400, error: "El cart no fue encontrado" };
         }
       }
     } catch (error) {
@@ -133,3 +152,5 @@ export default class CartManager {
     }
   }
 }
+
+const CM = new CartManager("carritos");

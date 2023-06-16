@@ -25,5 +25,14 @@
 		"code": "abc555",
 		"stock": 6,
 		"id": 1686709179872
+	},
+	{
+		"title": "QUINTA  prueba",
+		"description": "Descripción del producto 1",
+		"price": 20,
+		"thumbnail": "sin imagen",
+		"code": "ab666",
+		"stock": 6,
+		"id": 1686867815153
 	}
 ]
