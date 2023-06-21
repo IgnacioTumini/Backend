@@ -1,0 +1,32 @@
+<!--IMPRIMIR LA LISTA DE PRODUCTOS HASTA EL MOMENTO-->
+
+<div class="products-container">
+  <h1>Productos en stock</h1>
+
+  {{#each products}}
+    <div class="card">
+      <div>{{this.title}}</div>
+      <div>{{this.description}}</div>
+      <div>{{this.price}}</div>
+      <div>{{this.thumbnail}}</div>
+      <div>{{this.code}}</div>
+      <div>{{this.stock}}</div>
+    </div>
+  {{/each}}
+
+</div>
+
+<!--<h1>Hola,{{user.name}}</h1>
+{{#if isAdmin}}
+  {{#each food}}
+    <div>
+      <p>{{this.name}}</p>
+      <p>{{this.price}}</p>
+    </div>
+  {{/each}}
+{{else}}
+  <p>no tiene permisos</p>
+{{/if}}-->
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

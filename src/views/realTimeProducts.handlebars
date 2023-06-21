@@ -1,0 +1,83 @@
+<div class="section-1">
+  <div class="products-container-websocket">
+    <h1>Productos en stock</h1>
+
+    {{#each products}}
+      <div class="card">
+        <div>{{this.title}}</div>
+        <div>{{this.description}}</div>
+        <div>{{this.price}}</div>
+        <div>{{this.thumbnail}}</div>
+        <div>{{this.code}}</div>
+        <div>{{this.stock}}</div>
+      </div>
+    {{/each}}
+
+  </div>
+  <div class="formulaio-container">
+    <h1>Añadir nuevo producto</h1>
+    <div>
+      <form>
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom01"
+          placeholder="Nombre"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom02"
+          placeholder="Descripcion"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom03"
+          placeholder="Precio"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom04"
+          placeholder="Imagen"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom05"
+          placeholder="Codigo"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom06"
+          placeholder="Stock"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Agregar</button>
+      </form>
+
+    </div>
+
+  </div></div>
+
+<!--<h1>Hola,{{user.name}}</h1>
+{{#if isAdmin}}
+  {{#each food}}
+    <div>
+      <p>{{this.name}}</p>
+      <p>{{this.price}}</p>
+    </div>
+  {{/each}}
+{{else}}
+  <p>no tiene permisos</p>
+{{/if}}-->
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

@@ -4,7 +4,8 @@ import productRouter from "../src/routes/productRoutes.js";
 import cartRouter from "../src/routes/cartRoutes.js";
 import __dirname from "./utils.js";
 import handlebars from "express-handlebars";
-import viewsRouter from "./routes/viewsRoutes.js";
+import homeRouter from "./routes/homeRoutes.js";
+import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
 import { Server } from "socket.io";
 
 const app = express();
@@ -20,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 //ROUTES
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
-app.use("/", viewsRouter);
+app.use("/", homeRouter);
+app.use("/realtimeproducts", realTimeProductsRoutes);
 
 // HANDLEBARS
 app.engine("handlebars", handlebars.engine());
