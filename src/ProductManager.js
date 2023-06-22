@@ -8,12 +8,13 @@ export default class ProductManager {
   }
 
   async addProduct(product) {
+    console.log("entro la funcion");
     try {
       if (fs.existsSync(this.file)) {
         const data = await fs.promises.readFile(this.file, "utf-8");
         if (data) {
           this.products = JSON.parse(data);
-          console.log(this.products);
+
           // Validar que todos los campos sean obligatorios
           if (
             !product.title ||
@@ -23,6 +24,7 @@ export default class ProductManager {
             !product.code ||
             !product.stock
           ) {
+            console.log("2");
             return { error: "Los atributos ingresados no son correctos" };
           }
 
@@ -31,14 +33,17 @@ export default class ProductManager {
             return { error: "el codigo ya existe" };
           }
           product.id = Date.now();
+          console.log(product);
           this.products.push(product);
           await fs.promises.writeFile(
             this.file,
             JSON.stringify(this.products, null, "\t")
           );
         }
+        console.log("entro aca");
         return { status: 200, message: "Producto añadido con exito" };
       } else {
+        console.log("entro al segundo");
         return { error: "base de datos no encontrada" };
       }
     } catch (error) {

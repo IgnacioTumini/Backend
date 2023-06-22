@@ -5,12 +5,13 @@
 
   {{#each products}}
     <div class="card">
-      <div>{{this.title}}</div>
-      <div>{{this.description}}</div>
-      <div>{{this.price}}</div>
-      <div>{{this.thumbnail}}</div>
-      <div>{{this.code}}</div>
-      <div>{{this.stock}}</div>
+      <div>Id: {{this.id}}</div>
+      <div>Nombre: {{this.title}}</div>
+      <div>Descripcion: {{this.description}}</div>
+      <div>Precio: ${{this.price}}</div>
+      <div>Imagen: {{this.thumbnail}}</div>
+      <div>Codigo: {{this.code}}</div>
+      <div>Stock: {{this.stock}}</div>
     </div>
   {{/each}}
 

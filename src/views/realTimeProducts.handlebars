@@ -1,28 +1,35 @@
 <div class="section-1">
-  <div class="products-container-websocket">
-    <h1>Productos en stock</h1>
 
-    {{#each products}}
-      <div class="card">
-        <div>{{this.title}}</div>
-        <div>{{this.description}}</div>
-        <div>{{this.price}}</div>
-        <div>{{this.thumbnail}}</div>
-        <div>{{this.code}}</div>
-        <div>{{this.stock}}</div>
-      </div>
-    {{/each}}
+  <div class="container-list">
+    <h1>Listado de productos en tiempo real</h1>
+    <div id="validationCustom07" class="products-container-websocket">
 
+      {{#each products}}
+        <div class="card">
+          <div>Id: {{this.id}}</div>
+          <div>Nombre: {{this.title}}</div>
+          <div>Descripcion: {{this.description}}</div>
+          <div>Precio: ${{this.price}}</div>
+          <div>Imagen: {{this.thumbnail}}</div>
+          <div>Codigo: {{this.code}}</div>
+          <div>Stock: {{this.stock}}</div>
+        </div>
+
+      {{/each}}
+
+    </div>
   </div>
+
   <div class="formulaio-container">
     <h1>Añadir nuevo producto</h1>
     <div>
-      <form>
+      <form id="form-products">
         <input
           type="text"
           class="form-control"
           id="validationCustom01"
           placeholder="Nombre"
+          name="title"
           required
         />
         <input
@@ -30,6 +37,7 @@
           class="form-control"
           id="validationCustom02"
           placeholder="Descripcion"
+          name="description"
           required
         />
         <input
@@ -37,6 +45,7 @@
           class="form-control"
           id="validationCustom03"
           placeholder="Precio"
+          name="price"
           required
         />
         <input
@@ -44,6 +53,7 @@
           class="form-control"
           id="validationCustom04"
           placeholder="Imagen"
+          name="thumbnail"
           required
         />
         <input
@@ -51,6 +61,7 @@
           class="form-control"
           id="validationCustom05"
           placeholder="Codigo"
+          name="code"
           required
         />
         <input
@@ -58,6 +69,7 @@
           class="form-control"
           id="validationCustom06"
           placeholder="Stock"
+          name="stock"
           required
         />
         <button type="submit" class="btn btn-primary">Agregar</button>

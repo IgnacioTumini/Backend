@@ -34,5 +34,41 @@
 		"code": "ab666",
 		"stock": 6,
 		"id": 1686867815153
+	},
+	{
+		"title": "nacho",
+		"description": "primera prueba",
+		"price": "20",
+		"thumbnail": "sin imgaen",
+		"code": "211516",
+		"stock": "2",
+		"id": 1687457927337
+	},
+	{
+		"title": "ASIJASD",
+		"description": "ASFAFS",
+		"price": "3",
+		"thumbnail": "AFSSFA",
+		"code": "ASFASF",
+		"stock": "2",
+		"id": 1687457979414
+	},
+	{
+		"title": "ASIJASDGF",
+		"description": "ASFAFSGF",
+		"price": "33",
+		"thumbnail": "AFSSFAFG",
+		"code": "ASFASFFG",
+		"stock": "22",
+		"id": 1687458013758
+	},
+	{
+		"title": "afsasfa",
+		"description": "dhfh",
+		"price": "238",
+		"thumbnail": "dfhdhdghd",
+		"code": "321651",
+		"stock": "65169",
+		"id": 1687458600213
 	}
 ]

@@ -7,8 +7,10 @@ import handlebars from "express-handlebars";
 import homeRouter from "./routes/homeRoutes.js";
 import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
 import { Server } from "socket.io";
+import ProductManager from "./ProductManager.js";
 
 const app = express();
+const PM = new ProductManager("Productos");
 
 // LEVANTAR EL SERVIDOR
 const httpServer = app.listen(8080, () => console.log("Server up"));
@@ -32,11 +34,14 @@ app.use(express.static(`${__dirname}/public`));
 
 // Sockets
 socketServer.on("connection", (socket) => {
-  console.log("Nuevo Cliente");
-
-  socket.on("message", (data) => {
-    console.log(data);
+  console.log("Cliente conectado: " + socket.id);
+  socket.on("new-product", async (newProduct) => {
+    try {
+      await PM.addProduct(newProduct);
+      const newProductList = await PM.getProducts();
+      socketServer.emit("products", newProductList);
+    } catch (error) {
+      console.log(error);
+    }
   });
-
-  socket.emit("evento_para_socket", "mensaje para que reciba el socket");
 });

@@ -5,13 +5,15 @@ p {
   background-color: lightblue;
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 800px;
   height: 200px;
   align-items: center;
   justify-content: center;
   gap: 5px;
   border: solid black;
   border-radius: 10px;
+  flex-wrap: wrap;
+  height: 50px;
 }
 .products-container-websocket {
   display: flex;
@@ -19,7 +21,7 @@ p {
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
-  width: 50%;
+  width: 100%;
 }
 .products-container {
   display: flex;
@@ -31,8 +33,21 @@ p {
 
 .section-1 {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 .formulaio-container {
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-content: center;
+  width: 30%;
+}
+.container-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
