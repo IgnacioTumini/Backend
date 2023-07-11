@@ -6,7 +6,6 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   let courses = await courseManager.getAll();
-
   res.render({ status: "success", payload: courses });
 });
 

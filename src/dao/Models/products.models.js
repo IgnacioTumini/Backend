@@ -3,27 +3,29 @@ import mongoose from "mongoose";
 const productsCollection = "products";
 
 const productSchema = mongoose.Schema({
-  first_name: {
+  title: {
     type: String,
     required: true,
   },
-  last_name: {
+  description: {
     type: String,
     required: true,
   },
-  email: {
+  price: {
+    type: Number,
+    required: true,
+  },
+  thumbnail: {
     type: String,
     required: true,
   },
-  dni: Number,
-  birthDate: Date,
-  gender: {
+  code: {
     type: String,
-    enum: ["M", "F"],
+    required: true,
   },
-  courses: {
-    type: Array,
-    default: [],
+  stock: {
+    type: Number,
+    required: true,
   },
 });
 

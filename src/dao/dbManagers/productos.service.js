@@ -1,4 +1,4 @@
-import productsModel from "../Models/products.js";
+import productsModel from "../Models/products.models.js";
 
 export default class Products {
   constructor() {
@@ -12,7 +12,7 @@ export default class Products {
     let result = await productsModel.create(product);
     return result;
   };
-  getProductById = async () => {};
-  updateProduct = async () => {};
-  removeProduct = async () => {};
+  getProductById = async (id) => {};
+  updateProduct = async (id, product) => {};
+  removeProduct = async (id) => {};
 }

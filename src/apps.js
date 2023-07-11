@@ -3,8 +3,9 @@ import __dirname from "./utils.js";
 import handlebars from "express-handlebars";
 import homeRouter from "./routes/homeRoutes.js";
 import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
-import chatRoutes from "./routes/chatRoutes.js";
+
 import { Server } from "socket.io";
+import chatService from "./dao/dbManagers/chats.service.js";
 import ProductManager from "./dao/fileManagers/ProductManager.js";
 
 import mongoose from "mongoose";
@@ -12,8 +13,10 @@ import mongoose from "mongoose";
 import viewsRouter from "./routes/views.routes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import productRouter from "./routes/productRoutes.js";
+import messageModel from "./dao/Models/chat.models.js";
 
 const app = express();
+const CS = new chatService();
 const PM = new ProductManager("Productos");
 
 // LEVANTAR EL SERVIDOR
@@ -27,17 +30,15 @@ app.use(express.urlencoded({ extended: true }));
 //ROUTES
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
-app.use("/", homeRouter);
+app.use("/home", homeRouter);
 app.use("/realtimeproducts", realTimeProductsRoutes);
-app.use("/chat", chatRoutes);
 
 app.use("/", viewsRouter);
-app.use("/api/courses", cartRouter);
-app.use("/api/users", productRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/product", productRouter);
 
 // HANDLEBARS
 app.engine("handlebars", handlebars.engine());
-
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 app.use(express.static(`${__dirname}/public`));
@@ -57,18 +58,27 @@ socketServer.on("connection", (socket) => {
 });
 
 //chatbox
-/*let messages = [];
+//let messages = CS.getAll();
 socketServer.on("connection", (socket) => {
-  socketServer.on("messages", (data) => {
-    messages.push(data);
-    socketServer.emit("messageLogs", messages);
-    console.log("data");
+  socket.on("message", async (data) => {
+    try {
+      CS.saveChat(data);
+      const messages = await CS.getAll();
+      socketServer.emit("messageLogs", messages);
+    } catch (error) {
+      console.log("no se pudo guadar en la BD");
+    }
+    
   });
 });
-*/
+
 // BASE DE DATOS
 
 mongoose.set("strictQuery", false);
 const connection = mongoose.connect(
   "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority"
 );
+
+app.use("*", (req, res) => {
+  res.send("No existe esta direccion");
+});
