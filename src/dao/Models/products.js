@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const usersCollection = "users";
+const productsCollection = "products";
 
-const userSchema = mongoose.Schema({
+const productSchema = mongoose.Schema({
   first_name: {
     type: String,
     required: true,
@@ -27,5 +27,5 @@ const userSchema = mongoose.Schema({
   },
 });
 
-const usersModel = mongoose.model(usersCollection, userSchema);
-export default usersModel;
+const productsModel = mongoose.model(productsCollection, productSchema);
+export default productsModel;

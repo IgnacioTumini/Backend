@@ -1,19 +1,17 @@
 import express from "express";
-import productRouter from "../src/routes/productRoutes.js";
-import cartRouter from "../src/routes/cartRoutes.js";
 import __dirname from "./utils.js";
 import handlebars from "express-handlebars";
 import homeRouter from "./routes/homeRoutes.js";
 import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import { Server } from "socket.io";
-import ProductManager from "./ProductManager.js";
+import ProductManager from "./dao/fileManagers/ProductManager.js";
 
 import mongoose from "mongoose";
 
 import viewsRouter from "./routes/views.routes.js";
-import courseRouter from "./routes/courses.routes.js";
-import usersRoutes from "./routes/users.routes.js";
+import cartRouter from "./routes/cartRoutes.js";
+import productRouter from "./routes/productRoutes.js";
 
 const app = express();
 const PM = new ProductManager("Productos");
@@ -33,10 +31,9 @@ app.use("/", homeRouter);
 app.use("/realtimeproducts", realTimeProductsRoutes);
 app.use("/chat", chatRoutes);
 
-//app.use("/api/users", usersRoutes);
 app.use("/", viewsRouter);
-app.use("/api/courses", courseRouter);
-app.use("/api/users", usersRoutes);
+app.use("/api/courses", cartRouter);
+app.use("/api/users", productRouter);
 
 // HANDLEBARS
 app.engine("handlebars", handlebars.engine());
@@ -59,6 +56,16 @@ socketServer.on("connection", (socket) => {
   });
 });
 
+//chatbox
+/*let messages = [];
+socketServer.on("connection", (socket) => {
+  socketServer.on("messages", (data) => {
+    messages.push(data);
+    socketServer.emit("messageLogs", messages);
+    console.log("data");
+  });
+});
+*/
 // BASE DE DATOS
 
 mongoose.set("strictQuery", false);

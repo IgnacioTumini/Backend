@@ -31,6 +31,7 @@ formProducts.addEventListener("submit", (e) => {
 });
 
 // ChatBox
+/*
 let = user;
 let chatBox = document.getElementById(chatBox);
 
@@ -54,3 +55,14 @@ chatBox.addEventListener("keyup", (evt) => {
     }
   }
 });
+
+socket.on("messageLogs", (data) => {
+  let log = document.getElementById("messageLogs");
+  let messages = "";
+
+  data.forEach((message) => {
+    messages = messages + `${message.user} dice: ${message.message} </br>`;
+  });
+  log.innerHTML = messages;
+});
+*/

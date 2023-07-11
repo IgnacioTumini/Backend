@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const coursesCollection = "courses";
+const cartsCollection = "carts";
 
-const coursesSchema = mongoose.Schema({
+const cartsSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -21,5 +21,5 @@ const coursesSchema = mongoose.Schema({
   },
 });
 
-const coursesModel = mongoose.model(coursesCollection, coursesSchema);
-export default coursesModel;
+const cartsModel = mongoose.model(cartsCollection, cartsSchema);
+export default cartsModel;
