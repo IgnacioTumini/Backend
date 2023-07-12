@@ -14,7 +14,6 @@ export default class Products {
   };
   getProductById = async (id) => {
     const findProduct = await productsModel.findById(id).exec();
-
     return { message: "Producto encontrado", product: findProduct };
   };
   updateProduct = async (id, product) => {
@@ -23,5 +22,6 @@ export default class Products {
   };
   removeProduct = async (id) => {
     await productsModel.findByIdAndRemove(id);
+    return {message : "Producto eliminado"}
   };
 }

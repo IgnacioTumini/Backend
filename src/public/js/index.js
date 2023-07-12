@@ -14,7 +14,7 @@ socket.on("products", (newProductList) => {
                         <div>Imagen: ${p.thumbnail}</div>
                         <div>Codigo: ${p.code}</div>
                         <div>Stock: ${p.stock}</div>
-                        <div>Id: ${p.id}</div>
+                        
                       </div>`;
   });
   dinamicListProducts.innerHTML = newProducts;

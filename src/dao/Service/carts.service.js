@@ -15,7 +15,7 @@ export default class Carts {
   createCart = async () => {
     const cart = new cartsModel();
     await cart.save();
-    return cart;
+    return { message: "Carrito creado correctamente", cart: cart };
   };
 
   addProductCart = async (cid, pid) => {
@@ -36,11 +36,16 @@ export default class Carts {
         update.products.push({ id: pid, quantity: 1 });
       }
       await cartsModel.findByIdAndUpdate(cid, { products: update.products });
+      return { message: "Producto agregado al carrito" };
     }
   };
   getCartById = async (cid) => {
     const findCart = await cartsModel.findById(cid).exec();
-    return findCart;
+    return { message: "Carrito encontrado", cart: findCart };
   };
-  removeCart = async (cid) => {};
+
+  removeCart = async (cid) => {
+    await cartsModel.findByIdAndRemove(cid);
+    return { message: "Carrito eliminado" };
+  };
 }

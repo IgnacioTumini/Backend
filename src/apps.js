@@ -14,9 +14,11 @@ import viewsRouter from "./routes/views.routes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 import messageModel from "./dao/Models/chat.models.js";
+import Products from "./dao/Service/productos.service.js";
 
 const app = express();
 const CS = new chatService();
+const PS = new Products();
 const PM = new ProductManager("Productos");
 
 // LEVANTAR EL SERVIDOR
@@ -47,8 +49,8 @@ socketServer.on("connection", (socket) => {
   console.log("Cliente conectado: " + socket.id);
   socket.on("new-product", async (newProduct) => {
     try {
-      await PS.s(newProduct);
-      const newProductList = await PM.getProducts();
+      await PS.saveProducts(newProduct);
+      const newProductList = await PS.getAll();
       socketServer.emit("products", newProductList);
     } catch (error) {
       console.log(error);
