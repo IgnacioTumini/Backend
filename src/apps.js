@@ -5,7 +5,7 @@ import homeRouter from "./routes/homeRoutes.js";
 import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
 
 import { Server } from "socket.io";
-import chatService from "./dao/dbManagers/chats.service.js";
+import chatService from "./dao/Service/chats.service.js";
 import ProductManager from "./dao/fileManagers/ProductManager.js";
 
 import mongoose from "mongoose";
@@ -21,7 +21,6 @@ const PM = new ProductManager("Productos");
 
 // LEVANTAR EL SERVIDOR
 const httpServer = app.listen(8080, () => console.log("Server up"));
-
 const socketServer = new Server(httpServer);
 
 app.use(express.json());
@@ -30,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 //ROUTES
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
-app.use("/home", homeRouter);
+app.use("/", homeRouter);
 app.use("/realtimeproducts", realTimeProductsRoutes);
 
 app.use("/", viewsRouter);
@@ -48,7 +47,7 @@ socketServer.on("connection", (socket) => {
   console.log("Cliente conectado: " + socket.id);
   socket.on("new-product", async (newProduct) => {
     try {
-      await PM.addProduct(newProduct);
+      await PS.s(newProduct);
       const newProductList = await PM.getProducts();
       socketServer.emit("products", newProductList);
     } catch (error) {
@@ -57,8 +56,8 @@ socketServer.on("connection", (socket) => {
   });
 });
 
-//chatbox
-//let messages = CS.getAll();
+//CHATBOX
+
 socketServer.on("connection", (socket) => {
   socket.on("message", async (data) => {
     try {
@@ -68,7 +67,6 @@ socketServer.on("connection", (socket) => {
     } catch (error) {
       console.log("no se pudo guadar en la BD");
     }
-    
   });
 });
 

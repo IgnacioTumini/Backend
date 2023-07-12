@@ -4,8 +4,8 @@
     <h1>Listado de productos en tiempo real</h1>
     <div id="validationCustom07" class="products-container-websocket">
 
-      {{#each products}}
-        <div class="card">
+      {{#each cleanProducts}}
+        <div id={{this.id}} class="card">
           <div>Id: {{this.id}}</div>
           <div>Nombre: {{this.title}}</div>
           <div>Descripcion: {{this.description}}</div>
@@ -78,18 +78,6 @@
     </div>
 
   </div></div>
-
-<!--<h1>Hola,{{user.name}}</h1>
-{{#if isAdmin}}
-  {{#each food}}
-    <div>
-      <p>{{this.name}}</p>
-      <p>{{this.price}}</p>
-    </div>
-  {{/each}}
-{{else}}
-  <p>no tiene permisos</p>
-{{/if}}-->
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/index.js"></script>

@@ -1,9 +1,9 @@
 import { Router } from "express";
-import Courses from "../dao/dbManagers/carts.service.js";
-import Users from "../dao/dbManagers/productos.service.js";
+import Carts from "../dao/Service/carts.service.js";
+import Products from "../dao/Service/productos.service.js";
 
-const courseManager = new Courses();
-const userManager = new Users();
+const CS = new Carts();
+const PS = new Products();
 const router = Router();
 
 //chatbox
@@ -12,15 +12,15 @@ router.get("/chat", (req, res) => {
 });
 
 router.get("/product", async (req, res) => {
-  let users = await userManager.getAll();
-  console.log(users);
-  res.send("users", { users });
+  let products = await PS.getAll();
+  console.log(products);
+  res.send("products", { products });
 });
 
 router.get("/cart", async (req, res) => {
-  let courses = await courseManager.getAll();
-  console.log(courses);
-  res.render("courses", { courses });
+  let carts = await CS.getAll();
+  console.log(carts);
+  res.render("carts", { carts });
 });
 
 export default router;

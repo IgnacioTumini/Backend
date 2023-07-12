@@ -3,9 +3,9 @@
 <div class="products-container">
   <h1>Productos en stock</h1>
 
-  {{#each products}}
-    <div class="card">
-      <div>Id: {{this.id}}</div>
+  {{#each cleanProducts}}
+    <div id={{this.id}} class="card">
+
       <div>Nombre: {{this.title}}</div>
       <div>Descripcion: {{this.description}}</div>
       <div>Precio: ${{this.price}}</div>
@@ -17,13 +17,5 @@
 
 </div>
 
-<div>
-  <h1>Bienvenido!</h1>
-  <input type="text" id="textBox" />
-  <p id="log"></p>
-
-</div>
-
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/index.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
