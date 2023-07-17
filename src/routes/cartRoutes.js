@@ -31,4 +31,13 @@ router.post("/:cid/product/:pid", async (req, res) => {
   res.send(addProduct);
 });
 
+//ELIMINAR TODOS LOS PRODUCTOS DEL CARRITO
+router.delete("/api/carts/:cid", async (req, res) => {});
+// ELIMINAR DEL CARRITO EL PRODUCTO SELECCIONADO
+router.delete("/api/carts/:cid/products/:pid", async (req, res) => {});
+// ACTUALIZAR EL CARRITO
+router.put("/api/carts/:cid", async (req, res) => {});
+// ACTUALIZAR LA CANTIDAD DE EJEMPLARES DEL PRODUCTO
+router.put("/api/carts/:cid/products/:pid", async (req, res) => {});
+
 export default router;

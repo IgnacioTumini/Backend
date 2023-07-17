@@ -3,23 +3,17 @@ import __dirname from "./utils.js";
 import handlebars from "express-handlebars";
 import homeRouter from "./routes/homeRoutes.js";
 import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
-
 import { Server } from "socket.io";
 import chatService from "./dao/Service/chats.service.js";
-import ProductManager from "./dao/fileManagers/ProductManager.js";
-
 import mongoose from "mongoose";
-
 import viewsRouter from "./routes/views.routes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import productRouter from "./routes/productRoutes.js";
-import messageModel from "./dao/Models/chat.models.js";
 import Products from "./dao/Service/productos.service.js";
 
 const app = express();
 const CS = new chatService();
 const PS = new Products();
-const PM = new ProductManager("Productos");
 
 // LEVANTAR EL SERVIDOR
 const httpServer = app.listen(8080, () => console.log("Server up"));
@@ -33,7 +27,6 @@ app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", homeRouter);
 app.use("/realtimeproducts", realTimeProductsRoutes);
-
 app.use("/", viewsRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/product", productRouter);
@@ -73,11 +66,13 @@ socketServer.on("connection", (socket) => {
 });
 
 // BASE DE DATOS
-
 mongoose.set("strictQuery", false);
-const connection = mongoose.connect(
-  "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority"
-);
+const enviroment = async () => {
+  await mongoose.connect(
+    "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority"
+  );
+};
+enviroment();
 
 app.use("*", (req, res) => {
   res.send("No existe esta direccion");

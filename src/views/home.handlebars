@@ -15,6 +15,13 @@
     </div>
   {{/each}}
 
+  {{#if hasPrevPage}}
+    <a href="/students?page={{prevPage}}"><button>Anterior</button></a>
+  {{/if}}
+  {{#if hasNextPage}}
+    <a href="/students?page={{nextPage}}"><button>Siguinte</button></a>
+  {{/if}}
+
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

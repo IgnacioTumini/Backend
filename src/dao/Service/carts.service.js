@@ -18,16 +18,16 @@ export default class Carts {
     return { message: "Carrito creado correctamente", cart: cart };
   };
 
-  addProductCart = async (cid, pid) => {
+  addProductCart = async (cid, pid, Pquantity) => {
     const findProduct = await PS.getProductById(pid);
     if (findProduct) {
       const update = await this.getCartById(cid);
-      console.log(update);
       const findProductInCart = update.products.find((prod) => prod.id == pid);
       if (findProductInCart) {
         const newProductsInCart = update.products.map((prod) => {
           if (prod.id == pid) {
-            prod.quantity += 1;
+            //quantity
+            prod.quantity += Pquantity || 1;
           }
           return prod;
         });

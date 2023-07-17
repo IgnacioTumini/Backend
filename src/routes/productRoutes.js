@@ -1,12 +1,25 @@
 import { Router } from "express";
 //import { uploader } from "../utils.js";
 import Products from "../dao/Service/productos.service.js";
+import productsModel from "../dao/Models/products.models.js";
 
 const router = Router();
 const PS = new Products();
 
 // GET PRODUCTS (traer todos los productos)
 router.get("/", async (req, res) => {
+  const query = req.query
+  const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
+    await productsModel.paginate({}, { limit: 10, page, lean: true });
+  const cleanProducts = docs;
+  res.render("home", {
+    students,
+    hasPrevPage,
+    hasNextPage,
+    prevPage,
+    nextPage,
+  });
+  /*
   let products = await PS.getAll();
   if (!products)
     return res
@@ -14,6 +27,7 @@ router.get("/", async (req, res) => {
       .send({ status: "error", error: "No pudo obtener datos" });
 
   res.send({ status: "success", payload: products });
+  */
 });
 //GET PRODUCT BY ID(traer un producto por id)
 router.get("/:pid", async (req, res) => {
