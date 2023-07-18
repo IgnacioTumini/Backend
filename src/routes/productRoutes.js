@@ -8,60 +8,148 @@ const PS = new Products();
 
 // GET PRODUCTS (traer todos los productos)
 router.get("/", async (req, res) => {
-  const query = req.query
-  const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
-    await productsModel.paginate({}, { limit: 10, page, lean: true });
-  const cleanProducts = docs;
-  res.render("home", {
-    students,
-    hasPrevPage,
-    hasNextPage,
-    prevPage,
-    nextPage,
-  });
-  /*
-  let products = await PS.getAll();
-  if (!products)
-    return res
-      .status(500)
-      .send({ status: "error", error: "No pudo obtener datos" });
+  try {
+    const queryParams = req.query;
+    const response = await PServives.getAll(queryParams);
 
-  res.send({ status: "success", payload: products });
-  */
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    return res.render("error");
+  }
 });
+
 //GET PRODUCT BY ID(traer un producto por id)
 router.get("/:pid", async (req, res) => {
-  const idProduct = req.params.pid;
-  const products = await PS.getProductById(idProduct);
-  res.status(200).send(products);
+  try {
+    const { id } = req.params;
+    const productFound = await PS.getProductById(id);
+
+    if (productFound) {
+      return res.status(201).json({
+        status: "success",
+        msg: "Product found",
+        payload: productFound,
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "The indicated product was not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ status: "error", msg: "Internal Server Error" });
+  }
 });
 // POST PRODUCT(SUBIR NUEVO PRODUCTO)
 router.post("/", async (req, res) => {
-  let { title, description, price, thumbnail, code, stock } = req.body;
+  try {
+    const { title, description, price, thumbnail, code, stock } = req.body;
 
-  let result = await PS.saveProducts({
-    title,
-    description,
-    price,
-    thumbnail,
-    code,
-    stock,
-  });
-  res.send({ status: "success", payload: result });
+    const productCreated = await PS.create({
+      title,
+      description,
+      price,
+      thumbnail,
+      code,
+      stock,
+    });
+
+    return res.status(201).json({
+      status: "success",
+      msg: "product created",
+      payload: {
+        id: productCreated._id,
+        title: productCreated.title,
+        description: productCreated.description,
+        price: productCreated.price,
+        thumbnail: productCreated.thumbnail,
+        code: productCreated.code,
+        stock: productCreated.stock,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      status: "error",
+      msg: "something went wrong :(",
+      payload: {},
+    });
+  }
 });
 // PUT PRODUCT(ACTUALIZAR)
-router.put("/:pid", async (req, res) => {
-  const product = req.body;
-  const idProduct = req.params.pid;
-  const productUpdate = await PS.updateProduct(idProduct, product);
-  res.status(200).send(productUpdate);
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, price, thumbnail, code, stock } = req.body;
+    try {
+      const productUptaded = await PS.update(
+        id,
+        title,
+        description,
+        price,
+        thumbnail,
+        code,
+        stock
+      );
+      if (productUptaded.matchedCount > 0) {
+        return res.status(201).json({
+          status: "success",
+          msg: "product update",
+          payload: {},
+        });
+      } else {
+        return res.status(404).json({
+          status: "error",
+          msg: "product not found",
+          payload: {},
+        });
+      }
+    } catch (e) {
+      return res.status(500).json({
+        status: "error",
+        msg: "db server error while updating product",
+        payload: {},
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      status: "error",
+      msg: "something went wrong :(",
+      payload: {},
+    });
+  }
 });
 
 // DELETE PRODUCT BY ID
-router.delete("/:pid", async (req, res) => {
-  const id = req.params.pid;
-  const productDelete = await PS.removeProduct(id);
-  res.status(200).send(productDelete);
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await PS.delete(id);
+    if (result?.deletedCount > 0) {
+      return res.status(200).json({
+        status: "success",
+        msg: "product deleted",
+        payload: {},
+      });
+    } else {
+      return res.status(404).json({
+        status: "error",
+        msg: "product not found",
+        payload: {},
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      status: "error",
+      msg: "something went wrong :(",
+      payload: {},
+    });
+  }
 });
 
 export default router;

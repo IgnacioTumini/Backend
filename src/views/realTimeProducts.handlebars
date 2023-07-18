@@ -4,12 +4,13 @@
     <h1>Listado de productos en tiempo real</h1>
     <div id="validationCustom07" class="products-container-websocket">
 
-      {{#each cleanProducts}}
-        <div id={{this.id}} class="card">
+      {{#each products}}
+        <div id={{this._id}} class="card">
 
           <div>Nombre: {{this.title}}</div>
           <div>Descripcion: {{this.description}}</div>
           <div>Precio: ${{this.price}}</div>
+          <div>Categoria: {{this.category}}</div>
           <div>Imagen: {{this.thumbnail}}</div>
           <div>Codigo: {{this.code}}</div>
           <div>Stock: {{this.stock}}</div>
@@ -48,6 +49,7 @@
           name="price"
           required
         />
+
         <input
           type="text"
           class="form-control"
@@ -70,6 +72,14 @@
           id="validationCustom06"
           placeholder="Stock"
           name="stock"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="validationCustom07"
+          placeholder="Categoria"
+          name="category"
           required
         />
         <button type="submit" class="btn btn-primary">Agregar</button>

@@ -3,24 +3,32 @@
 <div class="products-container">
   <h1>Productos en stock</h1>
 
-  {{#each cleanProducts}}
-    <div id={{this.id}} class="card">
+  {{#each products}}
+    <div id={{this._id}} class="card">
 
       <div>Nombre: {{this.title}}</div>
       <div>Descripcion: {{this.description}}</div>
       <div>Precio: ${{this.price}}</div>
+      <div>Category: ${{this.category}}</div>
       <div>Imagen: {{this.thumbnail}}</div>
       <div>Codigo: {{this.code}}</div>
       <div>Stock: {{this.stock}}</div>
     </div>
   {{/each}}
 
-  {{#if hasPrevPage}}
-    <a href="/students?page={{prevPage}}"><button>Anterior</button></a>
-  {{/if}}
-  {{#if hasNextPage}}
-    <a href="/students?page={{nextPage}}"><button>Siguinte</button></a>
-  {{/if}}
+  <div>
+    {{#if response.payload.hasPrevPage}}
+      <a href="{{response.payload.prevPageURL}}">⬅️anterior</a>
+    {{/if}}
+    {{#if response}}<span>Pagina
+        {{response.payload.page}}
+        de
+        {{response.payload.totalPages}}</span>
+    {{/if}}
+    {{#if response.payload.hasNextPage}}
+      <a href="{{response.payload.nextPageURL}}">siguiente➡️</a>
+    {{/if}}
+  </div>
 
 </div>
 

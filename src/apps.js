@@ -42,8 +42,8 @@ socketServer.on("connection", (socket) => {
   console.log("Cliente conectado: " + socket.id);
   socket.on("new-product", async (newProduct) => {
     try {
-      await PS.saveProducts(newProduct);
-      const newProductList = await PS.getAll();
+      await PS.create(newProduct);
+      const newProductList = await PS.getProductRealTime();
       socketServer.emit("products", newProductList);
     } catch (error) {
       console.log(error);
@@ -69,7 +69,8 @@ socketServer.on("connection", (socket) => {
 mongoose.set("strictQuery", false);
 const enviroment = async () => {
   await mongoose.connect(
-    "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority",
+    { dbName: "ecommerce" }
   );
 };
 enviroment();
