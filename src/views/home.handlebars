@@ -9,16 +9,17 @@
       <div>Nombre: {{this.title}}</div>
       <div>Descripcion: {{this.description}}</div>
       <div>Precio: ${{this.price}}</div>
-      <div>Category: ${{this.category}}</div>
+      <div>Category: {{this.category}}</div>
       <div>Imagen: {{this.thumbnail}}</div>
       <div>Codigo: {{this.code}}</div>
       <div>Stock: {{this.stock}}</div>
+      <a href="/product/{{this._id}}"><button class="btn btn-primary">Ver más</button></a>
     </div>
   {{/each}}
 
   <div>
     {{#if response.payload.hasPrevPage}}
-      <a href="{{response.payload.prevPageURL}}">⬅️anterior</a>
+      <a href="{{response.payload.prevPageURL}}"><button>Anterior</button></a>
     {{/if}}
     {{#if response}}<span>Pagina
         {{response.payload.page}}
@@ -26,7 +27,7 @@
         {{response.payload.totalPages}}</span>
     {{/if}}
     {{#if response.payload.hasNextPage}}
-      <a href="{{response.payload.nextPageURL}}">siguiente➡️</a>
+      <a href="{{response.payload.nextPageURL}}"><button>Siguiente</button></a>
     {{/if}}
   </div>
 

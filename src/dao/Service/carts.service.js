@@ -1,4 +1,6 @@
+//@ts-check
 import cartsModel from "../Models/carts.models.js";
+import productsModel from "../Models/products.models.js";
 import Products from "./productos.service.js";
 
 const PS = new Products();
@@ -19,33 +21,114 @@ export default class Carts {
   };
 
   addProductCart = async (cid, pid, Pquantity) => {
+    try {
+      const cart = await cartsModel.findById(cid);
+      const product = await productsModel.findById(pid);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+      if (!product) {
+        throw new Error("Product not found");
+      }
+      const findProdInCart = await cartsModel.findOne({
+        products: { $elemMatch: { product: pid } },
+      });
+
+      if (findProdInCart) {
+        await cartsModel.updateOne(
+          { _id: cid, "products.product": pid },
+          { $inc: { "products.$.quantity": Pquantity } }
+        );
+      } else {
+        cart.products.push({ product: product._id, quantity: Pquantity });
+      }
+      await cart.save();
+      const updatedCart = await cartsModel.findById(cid);
+
+      return updatedCart;
+    } catch (error) {
+      throw error;
+    }
+    /*
     const findProduct = await PS.getProductById(pid);
+
     if (findProduct) {
       const update = await this.getCartById(cid);
-      const findProductInCart = update.products.find((prod) => prod.id == pid);
+
+      const findProductInCart = update.products.find((prod) => prod == pid);
+
       if (findProductInCart) {
         const newProductsInCart = update.products.map((prod) => {
           if (prod.id == pid) {
-            //quantity
-            prod.quantity += Pquantity || 1;
+            prod.quantity += Pquantity;
           }
           return prod;
         });
         update.products = newProductsInCart;
       } else {
-        update.products.push({ id: pid, quantity: 1 });
+        update.products.push({ id: pid, quantity: Pquantity });
       }
       await cartsModel.findByIdAndUpdate(cid, { products: update.products });
       return { message: "Producto agregado al carrito" };
     }
+    */
   };
   getCartById = async (cid) => {
-    const findCart = await cartsModel.findById(cid).exec();
-    return { message: "Carrito encontrado", cart: findCart };
-  };
+    const findCart = await cartsModel
+      .findById(cid)
+      .populate("products.product");
 
-  removeCart = async (cid) => {
-    await cartsModel.findByIdAndRemove(cid);
-    return { message: "Carrito eliminado" };
+    if (!findCart) {
+      throw new Error("Cart not found");
+    }
+
+    return findCart;
   };
+  async deleteProduct(cid, pid) {
+    try {
+      const cart = await cartsModel.findById(cid);
+      const product = await productsModel.findById(pid);
+      if (!cart) {
+        throw new Error("Cart not found");
+      }
+      if (!product) {
+        throw new Error("Product not found");
+      }
+
+      const findProdInCart = await cartsModel.findOne({
+        products: { $elemMatch: { product: pid } },
+      });
+
+      if (findProdInCart) {
+        await cartsModel.updateOne(
+          { _id: cid, "products.product": pid },
+          {
+            $inc: { "products.$.quantity": -1 },
+          }
+        );
+        //no puedo hacer que cuando el producto llegue a 0 se elimine
+      }
+
+      await cart.save();
+      const updatedCart = await cartsModel.findById(cid);
+
+      return updatedCart;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteCart({ cid }) {
+    try {
+      const updatedCart = await cartsModel.findOneAndUpdate(
+        { _id: cid },
+        { products: [] },
+        { new: true }
+      );
+      return updatedCart;
+    } catch (error) {
+      console.error("Error deleting product from cart:", error);
+      throw error;
+    }
+  }
 }

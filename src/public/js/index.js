@@ -10,7 +10,7 @@ socket.on("products", (newProductList) => {
     newProducts += `<div class="card">
                         <div>Nombre: ${p.title}</div>
                         <div>Descripcion: ${p.description}</div>
-                        <div>Precio: ${p.price}</div>
+                        <div>Precio:$ ${p.price}</div>
                         <div>Imagen: ${p.thumbnail}</div>
                         <div>Codigo: ${p.code}</div>
                         <div>Stock: ${p.stock}</div>
