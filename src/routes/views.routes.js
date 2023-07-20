@@ -15,7 +15,8 @@ router.get("/product/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
     const findProduct = await PS.getProductById(pid);
-    res.render("product", { findProduct });
+    console.log(findProduct);
+    res.render("productDetail", { findProduct });
   } catch (error) {
     res.render("error");
   }

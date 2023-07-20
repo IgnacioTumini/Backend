@@ -1,19 +1,21 @@
 <div class="products-container">
   <h1>Detalle del producto</h1>
 
-  {{#each findProduct}}
-    <div id={{this._id}} class="card">
+  {{#if findProduct}}
+    <div class="card">
 
       <div>Nombre: {{this.title}}</div>
       <div>Descripcion: {{this.description}}</div>
       <div>Precio: ${{this.price}}</div>
-      <div>Category: {{this.category}}</div>
       <div>Imagen: {{this.thumbnail}}</div>
       <div>Codigo: {{this.code}}</div>
       <div>Stock: {{this.stock}}</div>
-      <a><button type="submit" class="btn btn-primary">Agregar al carrito</button></a>
+      <div>Category: {{this.category}}</div>
 
     </div>
-  {{/each}}
+    <a><button type="submit" class="btn btn-primary">Agregar al carrito</button></a>
+  {{else}}
+    <p>El producto no existe o no se encontró.</p>
+  {{/if}}
 
 </div>

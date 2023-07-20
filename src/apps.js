@@ -28,7 +28,6 @@ app.use("/api/carts", cartRouter);
 app.use("/", homeRouter);
 app.use("/realtimeproducts", realTimeProductsRoutes);
 app.use("/", viewsRouter);
-app.use("/api/cart", cartRouter);
 app.use("/api/product", productRouter);
 
 // HANDLEBARS

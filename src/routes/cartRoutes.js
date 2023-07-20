@@ -9,7 +9,8 @@ const PS = new Products();
 // GET TRAE TODOS LOS CARRITOS
 router.get("/", async (req, res) => {
   let carts = await CS.getAll();
-  res.render({ status: "success", payload: carts });
+  console.log(carts);
+  res.send({ status: "success", payload: carts });
 });
 
 // GET TRAE UN CARRITO POR SU ID
@@ -92,9 +93,5 @@ router.delete("/:cid/products/:pid", async (req, res) => {
     });
   }
 });
-// ACTUALIZAR EL CARRITO
-router.put("/carts/:cid", async (req, res) => {});
-// ACTUALIZAR LA CANTIDAD DE EJEMPLARES DEL PRODUCTO
-router.put("/carts/:cid/products/:pid", async (req, res) => {});
 
 export default router;

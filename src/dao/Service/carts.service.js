@@ -11,7 +11,12 @@ export default class Carts {
   }
 
   getAll = async () => {
-    let carts = await cartsModel.find().lean();
+    const carts = await cartsModel.find(
+      {},
+      {
+        __v: false,
+      }
+    );
     return carts;
   };
   createCart = async () => {
