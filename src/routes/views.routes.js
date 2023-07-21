@@ -15,8 +15,10 @@ router.get("/product/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
     const findProduct = await PS.getProductById(pid);
-    console.log(findProduct);
-    res.render("productDetail", { findProduct });
+    const cleanProduct = { id: findProduct._id.toString(), ...findProduct };
+    delete cleanProduct._id;
+    console.log(cleanProduct);
+    res.render("productDetail", { findProduct: cleanProduct });
   } catch (error) {
     res.render("error");
   }

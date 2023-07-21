@@ -137,7 +137,7 @@ export default class Products {
       }
     );
 
-    return producById;
+    return producById._doc;
   }
   async update(id, title, description, price, thumbnail, code, stock) {
     const userUptaded = await productsModel.updateOne(
