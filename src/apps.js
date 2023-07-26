@@ -41,6 +41,9 @@ const connection = mongoose.connect(
 // SESION CON BASE DE DATOS
 app.use(
   session({
+    secret: "12345abcd",
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl:
         "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority",
@@ -51,9 +54,6 @@ app.use(
       },
       ttl: 3600,
     }),
-    secret: "12345abcd",
-    resave: false,
-    saveUninitialized: false,
   })
 );
 

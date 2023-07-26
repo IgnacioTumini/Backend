@@ -2,19 +2,19 @@
   <h1>Registro</h1>
   <form id="registerForm" action="/api/sessions/register" method="post">
     <label>Nombre</label>
-    <input name="first_name" />
+    <input required name="first_name" />
     <br />
     <label>Apellido</label>
-    <input name="last_name" />
+    <input required name="last_name" />
     <br />
     <label>Email</label>
-    <input name="email" />
+    <input required name="email" />
     <br />
     <label>Edad</label>
-    <input name="age" />
+    <input required name="age" />
     <br />
     <label>Contraseña</label>
-    <input type="password" name="password" />
+    <input required type="password" name="password" />
     <input type="submit" />
   </form>
   <p>¿Ya tienes una cuenta? <a href="/">Ingresa aquí</a></p>

@@ -1,7 +1,9 @@
 import { Router } from "express";
 import userModel from "../dao/Models/users.models.js";
+import cookieParser from "cookie-parser";
 
 const router = Router();
+router.use(cookieParser());
 
 router.post("/register", async (req, res) => {
   const { first_name, last_name, email, age, password } = req.body;
@@ -12,16 +14,28 @@ router.post("/register", async (req, res) => {
       .status(400)
       .send({ status: "error", error: "Users already exists" });
 
-  const user = {
-    first_name,
-    last_name,
-    email,
-    age,
-    password,
-  };
+  if ((email == "adminCoder@coder.com") & (password == "adminCod3r123")) {
+    const user = {
+      first_name,
+      last_name,
+      email,
+      age,
+      password,
+      role: "admin",
+    };
+    await userModel.create(user);
+  } else {
+    const user = {
+      first_name,
+      last_name,
+      email,
+      age,
+      password,
+    };
+    await userModel.create(user);
+  }
 
-  await userModel.create(user);
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 router.post("/login", async (req, res) => {
@@ -39,10 +53,10 @@ router.post("/login", async (req, res) => {
     age: user.age,
     role: user.role,
   };
-  res.redirect("/products");
+  res.redirect("/profile");
 });
 
-router.get("/logout", async (req, res) => {
+router.get("/logout", (req, res) => {
   req.session.destroy((error) => {
     if (error) {
       return res.status(400).json({ message: "No se pudo cerrar sesion" });
