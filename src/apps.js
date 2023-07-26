@@ -1,4 +1,7 @@
 import express from "express";
+import MongoStore from "connect-mongo";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 import __dirname from "./utils.js";
 import handlebars from "express-handlebars";
 import homeRouter from "./routes/homeRoutes.js";
@@ -10,6 +13,8 @@ import viewsRouter from "./routes/views.routes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 import Products from "./dao/Service/productos.service.js";
+import sessionRouter from "./routes/sessions.routes.js";
+import { checkAdmin } from "./Middlewares/Authenticate.js";
 
 const app = express();
 const CS = new chatService();
@@ -19,14 +24,45 @@ const PS = new Products();
 const httpServer = app.listen(8080, () => console.log("Server up"));
 const socketServer = new Server(httpServer);
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// BASE DE DATOS
+
+const connection = mongoose.connect(
+  "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority",
+  {
+    dbName: "ecommerce",
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
+
+// SESION CON BASE DE DATOS
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority",
+      mongoOptions: {
+        dbName: "ecommerce",
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+      ttl: 3600,
+    }),
+    secret: "12345abcd",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 //ROUTES
+app.use("/api/sessions", sessionRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", homeRouter);
-app.use("/realtimeproducts", realTimeProductsRoutes);
+app.use("/realtimeproducts", checkAdmin, realTimeProductsRoutes);
 app.use("/", viewsRouter);
 app.use("/api/product", productRouter);
 
@@ -51,7 +87,6 @@ socketServer.on("connection", (socket) => {
 });
 
 //CHATBOX
-
 socketServer.on("connection", (socket) => {
   socket.on("message", async (data) => {
     try {
@@ -63,16 +98,6 @@ socketServer.on("connection", (socket) => {
     }
   });
 });
-
-// BASE DE DATOS
-mongoose.set("strictQuery", false);
-const enviroment = async () => {
-  await mongoose.connect(
-    "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority",
-    { dbName: "ecommerce" }
-  );
-};
-enviroment();
 
 app.use("*", (req, res) => {
   res.send("No existe esta direccion");

@@ -26,16 +26,16 @@ export default class Products {
         prevPage: result.prevPage,
         nextPage: result.nextPage,
         prevPageURL: result.prevPage
-          ? `http://localhost:8080/?page=${result.prevPage}`
+          ? `http://localhost:8080/products?page=${result.prevPage}`
           : null,
         nextPageURL: result.nextPage
-          ? `http://localhost:8080/?page=${result.nextPage}`
+          ? `http://localhost:8080/products?page=${result.nextPage}`
           : null,
         prevPageApi: result.prevPage
-          ? `http://localhost:8080/?page=${result.prevPage}`
+          ? `http://localhost:8080/api/products?page=${result.prevPage}`
           : null,
         nextPageApi: result.nextPage
-          ? `http://localhost:8080/?page=${result.nextPage}`
+          ? `http://localhost:8080/api/products?page=${result.nextPage}`
           : null,
       },
     };

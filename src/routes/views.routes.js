@@ -1,16 +1,33 @@
 import { Router } from "express";
 import Carts from "../dao/Service/carts.service.js";
 import Products from "../dao/Service/productos.service.js";
+import { authenticate } from "../Middlewares/Authenticate.js";
 
 const CS = new Carts();
 const PS = new Products();
 const router = Router();
 
-//chatbox
+//RENDER DE REGISTRO
+router.get("/register", (req, res) => {
+  res.render("register");
+});
+
+// RENDER PERFIL
+router.get("/profile", authenticate, (req, res) => {
+  res.render("profile", {
+    user: req.session.user,
+  });
+});
+//RENDER DE LOGIN
+router.get("/", (req, res) => {
+  res.render("login");
+});
+
+//CHATBOX
 router.get("/chat", (req, res) => {
   res.render("chat");
 });
-
+// RENDER DEL DETALLE DEL PRODUCTO
 router.get("/product/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
@@ -23,7 +40,7 @@ router.get("/product/:pid", async (req, res) => {
     res.render("error");
   }
 });
-
+// RENDER DEL CARRITO
 router.get("/cart/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
@@ -37,19 +54,4 @@ router.get("/cart/:cid", async (req, res) => {
   }
 });
 
-/*
-router.get("/students", async (req, res) => {
-  const { page = 1 } = req.query;
-  const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
-    await productsModel.paginate({}, { limit: 10, page, lean: true });
-  const students = docs;
-  res.render("students", {
-    students,
-    hasPrevPage,
-    hasNextPage,
-    prevPage,
-    nextPage,
-  });
-});
-*/
 export default router;

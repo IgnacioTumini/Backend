@@ -4,7 +4,7 @@ import Products from "../dao/Service/productos.service.js";
 const router = express.Router();
 const PS = new Products();
 
-router.get("/", async (req, res) => {
+router.get("/products", async (req, res) => {
   const title = "Listado de productos";
   try {
     const queryParams = req.query;
