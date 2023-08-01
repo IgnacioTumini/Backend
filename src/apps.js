@@ -15,6 +15,8 @@ import productRouter from "./routes/productRoutes.js";
 import Products from "./dao/Service/productos.service.js";
 import sessionRouter from "./routes/sessions.routes.js";
 import { checkAdmin } from "./Middlewares/Authenticate.js";
+import initializedPassport from "./config/passport.config.js";
+import passport from "passport";
 
 const app = express();
 const CS = new chatService();
@@ -56,6 +58,10 @@ app.use(
     }),
   })
 );
+// PASSPORT
+initializedPassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //ROUTES
 app.use("/api/sessions", sessionRouter);

@@ -1,12 +1,12 @@
 <div>
   <h1>BIENVENIDO!</h1>
-  <p>Nombre y Apellido: {{user.name}}</p>
+  <p>Nombre y Apellido: {{user.first_name}} {{user.last_name}}</p>
   <p> Email: {{user.email}}</p>
   <p>Edad: {{user.age}}</p>
   <p>Rol: {{user.role}}</p>
   <a href="/api/sessions/logout"><button
       type="submit"
       class="btn btn-primary"
-    >Cerrar secion</button></a>
+    >Cerrar sesión</button></a>
   <a href="/products"><button class="btn btn-primary">Ver Productos</button></a>
 </div>

@@ -11,6 +11,9 @@ const router = Router();
 router.get("/register", (req, res) => {
   res.render("register");
 });
+router.get("/resetPassword", (req, res) => {
+  res.render("resetPassword");
+});
 
 // RENDER PERFIL
 router.get("/profile", authenticate, (req, res) => {

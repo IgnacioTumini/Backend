@@ -54,29 +54,6 @@ export default class Carts {
     } catch (error) {
       throw error;
     }
-    /*
-    const findProduct = await PS.getProductById(pid);
-
-    if (findProduct) {
-      const update = await this.getCartById(cid);
-
-      const findProductInCart = update.products.find((prod) => prod == pid);
-
-      if (findProductInCart) {
-        const newProductsInCart = update.products.map((prod) => {
-          if (prod.id == pid) {
-            prod.quantity += Pquantity;
-          }
-          return prod;
-        });
-        update.products = newProductsInCart;
-      } else {
-        update.products.push({ id: pid, quantity: Pquantity });
-      }
-      await cartsModel.findByIdAndUpdate(cid, { products: update.products });
-      return { message: "Producto agregado al carrito" };
-    }
-    */
   };
   getCartById = async (cid) => {
     const findCart = await cartsModel
