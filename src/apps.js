@@ -14,6 +14,7 @@ import cartRouter from "./routes/cartRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 import Products from "./dao/Service/productos.service.js";
 import sessionRouter from "./routes/sessions.routes.js";
+import cookierRouter from "./routes/cookies.routes.js";
 import { checkAdmin } from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import passport from "passport";
@@ -71,6 +72,7 @@ app.use("/", homeRouter);
 app.use("/realtimeproducts", checkAdmin, realTimeProductsRoutes);
 app.use("/", viewsRouter);
 app.use("/api/product", productRouter);
+app.use("/cookie", cookierRouter);
 
 // HANDLEBARS
 app.engine("handlebars", handlebars.engine());
