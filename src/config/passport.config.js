@@ -3,6 +3,7 @@ import local from "passport-local";
 import userModel from "../dao/Models/users.models.js";
 import { createHast, isValidPassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
+import cartsModel from "../dao/Models/carts.models.js";
 
 const LocalStrategy = local.Strategy;
 const initializedPassport = () => {
@@ -16,6 +17,13 @@ const initializedPassport = () => {
           let user = await userModel.findOne({ email: email });
           if (user) {
             console.log("User already exists");
+            return done(null, false);
+          }
+          let userCart = await cartsModel.create();
+          console.log("pase del carrito");
+
+          if (!userCart) {
+            console.log("Error en crear  un carrito para el usuario");
             return done(null, false);
           }
           if (
@@ -43,8 +51,6 @@ const initializedPassport = () => {
             let result = await userModel.create(newUser);
             return done(null, result);
           }
-
-          return done(null, result);
         } catch (error) {
           return done("Error de usuaio" + error);
         }
@@ -104,6 +110,11 @@ const initializedPassport = () => {
 
           let user = await userModel.findOne({ email: profile.email });
           if (!user) {
+            let userCart = await cartsModel.create();
+            if (!userCart) {
+              console.log("Error en crear un carrito para el usuario");
+              return done(null, false);
+            }
             const newUser = {
               email: profile.email,
               firstName: profile._json.name || profile._json.login || "noname",
