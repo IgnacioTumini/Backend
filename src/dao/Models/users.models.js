@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { Schema, model } from "mongoose";
 const usersCollection = "users";
 
 const userSchema = mongoose.Schema({
@@ -25,7 +25,6 @@ const userSchema = mongoose.Schema({
   cid: {
     type: Schema.Types.ObjectId,
     ref: "carts",
-    required: true,
   },
 });
 

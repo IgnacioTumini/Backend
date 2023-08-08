@@ -1,5 +1,5 @@
 import userModel from "../Models/users.models";
-import { isValidPassword } from "../../utils";
+import { isValidPassword } from "../../config";
 
 export default class User {
   async getAll() {

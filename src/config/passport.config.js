@@ -1,9 +1,10 @@
 import passport from "passport";
 import local from "passport-local";
 import userModel from "../dao/Models/users.models.js";
-import { createHast, isValidPassword } from "../utils.js";
+import { createHast, isValidPassword } from "../config.js";
 import GitHubStrategy from "passport-github2";
 import cartsModel from "../dao/Models/carts.models.js";
+import Carts from "../dao/Service/carts.service.js";
 
 const LocalStrategy = local.Strategy;
 const initializedPassport = () => {
@@ -19,7 +20,8 @@ const initializedPassport = () => {
             console.log("User already exists");
             return done(null, false);
           }
-          let userCart = await cartsModel.create();
+          let userCart = new cartsModel();
+
           console.log("pase del carrito");
 
           if (!userCart) {
@@ -37,6 +39,7 @@ const initializedPassport = () => {
               age,
               password: createHast(password),
               role: "admin",
+              cid: userCart._id.toString(),
             };
             let result = await userModel.create(newUser);
             return done(null, result);
@@ -47,6 +50,7 @@ const initializedPassport = () => {
               email,
               age,
               password: createHast(password),
+              cid: userCart._id.toString(),
             };
             let result = await userModel.create(newUser);
             return done(null, result);
@@ -110,17 +114,18 @@ const initializedPassport = () => {
 
           let user = await userModel.findOne({ email: profile.email });
           if (!user) {
-            let userCart = await cartsModel.create();
+            let userCart = new cartsModel();
             if (!userCart) {
               console.log("Error en crear un carrito para el usuario");
               return done(null, false);
             }
             const newUser = {
               email: profile.email,
-              firstName: profile._json.name || profile._json.login || "noname",
-              lastName: "nolast",
+              first_name: profile._json.name || profile._json.login || "",
+              last_name: "",
               isAdmin: false,
               password: "nopass",
+              cid: userCart._id.toString(),
             };
             let userCreated = await userModel.create(newUser);
             console.log("User Registration succesful");

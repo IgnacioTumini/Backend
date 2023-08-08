@@ -1,7 +1,7 @@
 import { Router } from "express";
 import userModel from "../dao/Models/users.models.js";
 import cookieParser from "cookie-parser";
-import { createHast, isValidPassword } from "../utils.js";
+import { createHast, isValidPassword } from "../config.js";
 import passport from "passport";
 
 const router = Router();

@@ -1,14 +1,28 @@
-<div>
-  <h1>Login</h1>
-  <form id="loginForm" action="/api/sessions/login" method="post">
-    <label>Email</label>
-    <input required name="email" />
-    <br />
-    <label>Contraseña</label>
-    <input required type="password" name="password" />
-    <input type="submit" />
-  </form>
-  <p>¿No estás registrado? <a href="/register">Regístrate aquí</a></p>
-  <p>¿Olvidaste tu contraseña? <a href="/resetPassword">Restáurala aquí</a></p>
-  <a href="api/sessions/github">Resgistrate con GitHub</a>
+<div class="pag-login">
+  <div class="formulario-login">
+    <h1>Login</h1>
+    <form
+      id="loginForm"
+      class="align-content-center d-flex flex-column"
+      action="/api/sessions/login"
+      method="post"
+    >
+      <input required placeholder="Email" class="form-control" name="email" />
+      <br />
+      <input
+        required
+        placeholder="Contraseña"
+        type="password"
+        class="form-control"
+        name="password"
+      />
+      <br />
+      <input type="submit" class="btn btn-primary" />
+    </form>
+    <p>¿No estás registrado? <a href="/register">Regístrate aquí</a></p>
+    <p>¿Olvidaste tu contraseña?
+      <a href="/resetPassword">Restáurala aquí</a></p>
+    <a href="api/sessions/github">Resgistrate con GitHub</a>
+  </div>
+
 </div>
