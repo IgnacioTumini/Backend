@@ -20,11 +20,17 @@ const userSchema = mongoose.Schema({
   },
   role: {
     type: String,
+    enum: ["admin", "user"],
     default: "user",
   },
   cid: {
-    type: Schema.Types.ObjectId,
-    ref: "carts",
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "carts",
+      },
+    ],
+    default: [],
   },
 });
 

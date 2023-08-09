@@ -6,64 +6,7 @@ import passport from "passport";
 
 const router = Router();
 router.use(cookieParser());
-/*
-router.post("/register", async (req, res) => {
-  const { first_name, last_name, email, age, password } = req.body;
-  const exist = await userModel.findOne({ email });
 
-  if (exist)
-    return res
-      .status(400)
-      .send({ status: "error", error: "Users already exists" });
-
-  if ((email == "adminCoder@coder.com") & (password == "adminCod3r123")) {
-    const user = {
-      first_name,
-      last_name,
-      email,
-      age,
-      password: createHast(password),
-      role: "admin",
-    };
-    await userModel.create(user);
-  } else {
-    const user = {
-      first_name,
-      last_name,
-      email,
-      age,
-      password: createHast(password),
-    };
-    await userModel.create(user);
-  }
-
-  res.redirect("/");
-});
-
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).send({ status: "error", error: "Error user" });
-  }
-
-  const user = await userModel.findOne(
-    { email: email },
-    { email: 1, first_name: 1, last_name: 1, password: 1, age: 1, role: 1 }
-  );
-
-  if (!user)
-    return res.status(400).send({ status: "error", error: "Error user" });
-
-  if (!isValidPassword(user, password)) {
-    return res
-      .status(403)
-      .send({ status: "error", error: "Incorrect credentials" });
-  }
-  req.session.user = user;
-  res.redirect("/profile");
-});
-*/
 router.get("/logout", (req, res) => {
   req.session.destroy((error) => {
     if (error) {

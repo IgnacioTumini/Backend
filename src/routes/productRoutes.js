@@ -1,7 +1,6 @@
 import { Router } from "express";
-//import { uploader } from "../utils.js";
 import Products from "../dao/Service/productos.service.js";
-import productsModel from "../dao/Models/products.models.js";
+
 
 const router = Router();
 const PS = new Products();

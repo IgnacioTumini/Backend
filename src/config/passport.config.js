@@ -4,26 +4,28 @@ import userModel from "../dao/Models/users.models.js";
 import { createHast, isValidPassword } from "../config.js";
 import GitHubStrategy from "passport-github2";
 import cartsModel from "../dao/Models/carts.models.js";
+import userService from "../dao/Service/users.service.js";
 import Carts from "../dao/Service/carts.service.js";
 
+const CS = new Carts();
+const US = new userService();
 const LocalStrategy = local.Strategy;
+
 const initializedPassport = () => {
   passport.use(
     "register",
     new LocalStrategy(
       { passReqToCallback: true, usernameField: "email" },
-      async (req, username, password, done) => {
-        const { first_name, last_name, email, age, role } = req.body;
+      async (req, email, password, done) => {
+        const { first_name, last_name, age, role } = req.body;
         try {
-          let user = await userModel.findOne({ email: email });
+          let user = await US.getBy({ email: email });
           if (user) {
             console.log("User already exists");
             return done(null, false);
           }
-          let userCart = new cartsModel();
-
+          let userCart = await CS.createCart();
           console.log("pase del carrito");
-
           if (!userCart) {
             console.log("Error en crear  un carrito para el usuario");
             return done(null, false);
@@ -39,9 +41,9 @@ const initializedPassport = () => {
               age,
               password: createHast(password),
               role: "admin",
-              cid: userCart._id.toString(),
+              cid: userCart.cart._id.toString(),
             };
-            let result = await userModel.create(newUser);
+            let result = await US.create(newUser);
             return done(null, result);
           } else {
             const newUser = {
@@ -50,9 +52,9 @@ const initializedPassport = () => {
               email,
               age,
               password: createHast(password),
-              cid: userCart._id.toString(),
+              cid: userCart.cart._id.toString(),
             };
-            let result = await userModel.create(newUser);
+            let result = await US.create(newUser);
             return done(null, result);
           }
         } catch (error) {
@@ -72,7 +74,7 @@ const initializedPassport = () => {
       async (req, email, password, done) => {
         try {
           console.log("----------------" + email);
-          const user = await userModel.findOne({ email: email });
+          let user = await US.getBy({ email: email });
           console.log("Ingrese aquí " + user);
           if (!user) {
             console.log("User already No exits");
@@ -106,15 +108,13 @@ const initializedPassport = () => {
           });
           const emails = await res.json();
           const emailDetail = emails.find((email) => email.verified == true);
-
           if (!emailDetail) {
             return done(new Error("cannot get a valid email for this user"));
           }
           profile.email = emailDetail.email;
-
           let user = await userModel.findOne({ email: profile.email });
           if (!user) {
-            let userCart = new cartsModel();
+            let userCart = await CS.createCart();
             if (!userCart) {
               console.log("Error en crear un carrito para el usuario");
               return done(null, false);
@@ -125,7 +125,7 @@ const initializedPassport = () => {
               last_name: "",
               isAdmin: false,
               password: "nopass",
-              cid: userCart._id.toString(),
+              cid: userCart.cart._id.toString(),
             };
             let userCreated = await userModel.create(newUser);
             console.log("User Registration succesful");
@@ -144,12 +144,12 @@ const initializedPassport = () => {
   );
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user._id);
   });
 
   passport.deserializeUser(async (id, done) => {
-    let user = await userModel.findById(id);
-    done(null, user);
+    let result = await US.getBy({ _id: id });
+    done(null, result);
   });
 };
 

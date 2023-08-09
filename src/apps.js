@@ -15,6 +15,7 @@ import productRouter from "./routes/productRoutes.js";
 import Products from "./dao/Service/productos.service.js";
 import sessionRouter from "./routes/sessions.routes.js";
 import cookierRouter from "./routes/cookies.routes.js";
+import userRouter from "./routes/users.routes.js";
 import { checkAdmin } from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import passport from "passport";
@@ -70,6 +71,7 @@ app.use("/api/sessions", sessionRouter);
 app.use("/api/products", productRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/product", productRouter);
+app.use("/api/users", userRouter);
 
 //ROUTES RENDERS
 app.use("/realtimeproducts", checkAdmin, realTimeProductsRoutes);
