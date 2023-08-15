@@ -6,7 +6,6 @@ import __dirname from "./config.js";
 import handlebars from "express-handlebars";
 import homeRouter from "./routes/homeRoutes.js";
 import realTimeProductsRoutes from "./routes/realTimeProductsRoutes.js";
-import { Server } from "socket.io";
 import chatService from "./dao/Service/chats.service.js";
 import mongoose from "mongoose";
 import viewsRouter from "./routes/views.routes.js";
@@ -20,13 +19,12 @@ import { checkAdmin } from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import passport from "passport";
 import { connectSocketServer } from "./utils/SocketServer.js";
+import env from "./config/enviroment.config.js";
 
 const app = express();
-const CS = new chatService();
-const PS = new Products();
-
+const PORT = env.port;
 // LEVANTAR EL SERVIDOR
-const httpServer = app.listen(8080, () => console.log("Server up"));
+const httpServer = app.listen(PORT, () => console.log("Server up"));
 connectSocketServer(httpServer);
 
 app.use(cookieParser());

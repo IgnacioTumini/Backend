@@ -6,9 +6,7 @@ import Products from "./productos.service.js";
 const PS = new Products();
 
 export default class Carts {
-  constructor() {
-    console.log("Entro a service cart ");
-  }
+  constructor() {}
 
   getAll = async () => {
     const carts = await cartsModel.find(

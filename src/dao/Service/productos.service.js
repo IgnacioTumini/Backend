@@ -1,9 +1,7 @@
 import productsModel from "../Models/products.models.js";
 
 export default class Products {
-  constructor() {
-    console.log("Entro a service Product");
-  }
+  constructor() {}
   getAll = async (queryParams) => {
     const { limit = 10, page = 1, sort, category, stock } = queryParams;
 
