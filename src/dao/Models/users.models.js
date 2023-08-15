@@ -24,13 +24,8 @@ const userSchema = mongoose.Schema({
     default: "user",
   },
   cid: {
-    type: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "carts",
-      },
-    ],
-    default: [],
+    type: Schema.Types.ObjectId,
+    ref: "carts",
   },
 });
 

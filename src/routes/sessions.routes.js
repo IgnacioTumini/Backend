@@ -56,7 +56,7 @@ router.post(
   async (req, res) => {
     console.log("Probando el ingreso a la estrategia");
 
-    const { email, password, first_name, last_name, age } = req.body;
+    const { email, password, first_name, last_name, age, cid } = req.body;
 
     if (!req.user)
       return res
@@ -69,11 +69,17 @@ router.post(
       age: req.user.age,
       email: req.user.email,
       role: req.user.role,
+      password: req.user.password,
+      cid: req.user.cid,
     };
     return res.redirect("/profile");
     //res.send({ status: "sucess", payload: req.user });
   }
 );
+router.get("/current", async (req, res) => {
+  let user = req.session.user;
+  res.send({ message: "User", payload: user });
+});
 
 router.get("/faillogin", async (req, res) => {
   console.log("Failed Estrategy");
