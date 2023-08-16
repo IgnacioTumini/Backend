@@ -1,9 +1,7 @@
 //@ts-check
 import cartsModel from "../Models/carts.models.js";
 import productsModel from "../Models/products.models.js";
-import Products from "./productos.service.js";
-
-const PS = new Products();
+import { PServices } from "./productos.service.js";
 
 export default class Carts {
   constructor() {}
@@ -26,7 +24,7 @@ export default class Carts {
   addProductCart = async (cid, pid, Pquantity) => {
     try {
       const cart = await cartsModel.findById(cid);
-      const product = await productsModel.findById(pid);
+      const product = await PServices.getProductById(pid);
       if (!cart) {
         throw new Error("Cart not found");
       }

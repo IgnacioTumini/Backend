@@ -5,7 +5,9 @@
   "main": "ProductManager.js",
   "type": "module",
   "scripts": {
-    "test": "echo && exit 1"
+    "test": "echo && exit 1",
+    "dev": "nodemon ./src/apps.js --mode DEVELOPMENT",
+    "start": "node ./src/apps.js --mode PRODUCTION"
   },
   "keywords": [],
   "author": "",

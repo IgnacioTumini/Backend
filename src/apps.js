@@ -19,11 +19,15 @@ import { connectMongo } from "./utils/dbConection.js";
 import { connectSocketServer } from "./utils/SocketServer.js";
 import env from "./config/enviroment.config.js";
 
+console.log(env);
+
 const app = express();
 const PORT = env.port;
 
 // LEVANTAR EL SERVIDOR
-const httpServer = app.listen(PORT, () => console.log("Server up"));
+const httpServer = app.listen(PORT, () =>
+  console.log(`Server up http://localhost:${PORT}`)
+);
 connectSocketServer(httpServer);
 
 // CONECCION CON LA BASE DE DATOS
@@ -40,8 +44,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://Ignacio:11199@ecommerce.4f71s0k.mongodb.net/?retryWrites=true&w=majority",
+      mongoUrl: env.mongoUrl,
       mongoOptions: {
         dbName: "ecommerce",
         useNewUrlParser: true,
@@ -64,7 +67,7 @@ app.use("/api/product", productRouter);
 app.use("/api/users", userRouter);
 
 //ROUTES RENDERS
-app.use("/realtimeproducts", checkAdmin, realTimeProductsRoutes);
+app.use("/realtimeproducts", realTimeProductsRoutes);
 app.use("/", homeRouter);
 app.use("/", viewsRouter);
 app.use("/cookie", cookierRouter);

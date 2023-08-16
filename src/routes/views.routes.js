@@ -1,10 +1,10 @@
 import { Router } from "express";
 import Carts from "../dao/Service/carts.service.js";
-import Products from "../dao/Service/productos.service.js";
+import { PServices } from "../dao/Service/productos.service.js";
 import { authenticate } from "../Middlewares/Authenticate.js";
 
 const CS = new Carts();
-const PS = new Products();
+
 const router = Router();
 
 //RENDER DE REGISTRO
@@ -35,7 +35,7 @@ router.get("/chat", (req, res) => {
 router.get("/product/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
-    const findProduct = await PS.getProductById(pid);
+    const findProduct = await PServices.getProductById(pid);
     const cleanProduct = { id: findProduct._id.toString(), ...findProduct };
     delete cleanProduct._id;
     console.log(cleanProduct);

@@ -1,10 +1,9 @@
 import { Router } from "express";
 import Carts from "../dao/Service/carts.service.js";
-import Products from "../dao/Service/productos.service.js";
+import { PServices } from "../dao/Service/productos.service.js";
 
 const router = Router();
 const CS = new Carts();
-const PS = new Products();
 
 // GET TRAE TODOS LOS CARRITOS
 router.get("/", async (req, res) => {
@@ -63,7 +62,7 @@ router.delete("/:cid/products/:pid", async (req, res) => {
     const pid = req.params.pid;
     const { quantity = 1 } = req.body;
 
-    const productById = await PS.getProductById(pid);
+    const productById = await PServices.getProductById(pid);
 
     if (productById) {
       const deletedProduct = await CS.deleteProduct(cid, pid, quantity);

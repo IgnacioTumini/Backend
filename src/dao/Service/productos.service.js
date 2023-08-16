@@ -1,6 +1,6 @@
 import productsModel from "../Models/products.models.js";
 
-export default class Products {
+class Products {
   constructor() {}
   getAll = async (queryParams) => {
     const { limit = 10, page = 1, sort, category, stock } = queryParams;
@@ -149,3 +149,4 @@ export default class Products {
     return result;
   }
 }
+export const PServices = new Products();

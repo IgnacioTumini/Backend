@@ -1,5 +1,5 @@
-import { Command } from "commander";
 import dotenv from "dotenv";
+import { Command } from "commander";
 
 const program = new Command();
 program.option("--mode <mode>", "Modo de trabajo", "DEVELOPMENT");
