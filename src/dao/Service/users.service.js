@@ -1,7 +1,7 @@
 import userModel from "../Models/users.models.js";
 import { isValidPassword } from "../../config.js";
 
-export default class User {
+class User {
   getAll = async () => {
     let users = await userModel.find().populate("cid.carts");
     return users.map((user) => user.toObject());
@@ -54,3 +54,5 @@ export default class User {
     }
   }
 }
+
+export const UServices = new User();

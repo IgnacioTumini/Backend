@@ -3,7 +3,7 @@ import cartsModel from "../Models/carts.models.js";
 import productsModel from "../Models/products.models.js";
 import { PServices } from "./productos.service.js";
 
-export default class Carts {
+class Carts {
   constructor() {}
 
   getAll = async () => {
@@ -110,3 +110,4 @@ export default class Carts {
     }
   }
 }
+export const CServices = new Carts();

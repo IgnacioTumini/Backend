@@ -1,9 +1,7 @@
 import { Router } from "express";
-import Carts from "../dao/Service/carts.service.js";
+import { CServices } from "../dao/Service/carts.service.js";
 import { PServices } from "../dao/Service/productos.service.js";
 import { authenticate } from "../Middlewares/Authenticate.js";
-
-const CS = new Carts();
 
 const router = Router();
 
@@ -48,7 +46,7 @@ router.get("/product/:pid", async (req, res) => {
 router.get("/cart/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const foundcart = await CS.getCartById(cid);
+    const foundcart = await CServices.getCartById(cid);
     console.log(foundcart);
     const plainCart = foundcart.products.map((doc) => doc.toObject());
     console.log(plainCart);

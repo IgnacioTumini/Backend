@@ -3,12 +3,10 @@ import local from "passport-local";
 import userModel from "../dao/Models/users.models.js";
 import { createHast, isValidPassword } from "../config.js";
 import GitHubStrategy from "passport-github2";
-import cartsModel from "../dao/Models/carts.models.js";
-import userService from "../dao/Service/users.service.js";
-import Carts from "../dao/Service/carts.service.js";
 
-const CS = new Carts();
-const US = new userService();
+import { UServices } from "../dao/Service/users.service.js";
+import { CServices } from "../dao/Service/carts.service.js";
+
 const LocalStrategy = local.Strategy;
 
 const initializedPassport = () => {
@@ -19,12 +17,12 @@ const initializedPassport = () => {
       async (req, email, password, done) => {
         const { first_name, last_name, age, role } = req.body;
         try {
-          let user = await US.getBy({ email: email });
+          let user = await UServices.getBy({ email: email });
           if (user) {
             console.log("User already exists");
             return done(null, false);
           }
-          let userCart = await CS.createCart();
+          let userCart = await CServices.createCart();
           console.log("pase del carrito");
           if (!userCart) {
             console.log("Error en crear  un carrito para el usuario");
@@ -43,7 +41,7 @@ const initializedPassport = () => {
               role: "admin",
               cid: userCart.cart._id.toString(),
             };
-            let result = await US.create(newUser);
+            let result = await UServices.create(newUser);
             return done(null, result);
           } else {
             const newUser = {
@@ -54,7 +52,7 @@ const initializedPassport = () => {
               password: createHast(password),
               cid: userCart.cart._id.toString(),
             };
-            let result = await US.create(newUser);
+            let result = await UServices.create(newUser);
             return done(null, result);
           }
         } catch (error) {
@@ -74,7 +72,7 @@ const initializedPassport = () => {
       async (req, email, password, done) => {
         try {
           console.log("----------------" + email);
-          let user = await US.getBy({ email: email });
+          let user = await UServices.getBy({ email: email });
           console.log("Ingrese aquí " + user);
           if (!user) {
             console.log("User already No exits");
@@ -114,7 +112,7 @@ const initializedPassport = () => {
           profile.email = emailDetail.email;
           let user = await userModel.findOne({ email: profile.email });
           if (!user) {
-            let userCart = await CS.createCart();
+            let userCart = await CServices.createCart();
             if (!userCart) {
               console.log("Error en crear un carrito para el usuario");
               return done(null, false);
@@ -148,7 +146,7 @@ const initializedPassport = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    let result = await US.getBy({ _id: id });
+    let result = await UServices.getBy({ _id: id });
     done(null, result);
   });
 };

@@ -67,7 +67,7 @@ app.use("/api/product", productRouter);
 app.use("/api/users", userRouter);
 
 //ROUTES RENDERS
-app.use("/realtimeproducts", realTimeProductsRoutes);
+app.use("/realtimeproducts", checkAdmin, realTimeProductsRoutes);
 app.use("/", homeRouter);
 app.use("/", viewsRouter);
 app.use("/cookie", cookierRouter);
