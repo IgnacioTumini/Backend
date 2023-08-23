@@ -23,4 +23,6 @@ router.delete("/:cid", cartController.deleteCart);
 // ELIMINAR DEL CARRITO EL PRODUCTO SELECCIONADO
 router.delete("/:cid/products/:pid", cartController.deleteProductInCart);
 
+router.get("/:cid/purchase", cartController.purchase);
+
 export default router;
