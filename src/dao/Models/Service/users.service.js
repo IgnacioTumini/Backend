@@ -1,5 +1,6 @@
-import userModel from "../Models/users.models.js";
-import { isValidPassword } from "../../config.js";
+
+import { isValidPassword } from "../../../config.js";
+import userModel from "../mongoose/users.models.js";
 
 class User {
   getAll = async () => {

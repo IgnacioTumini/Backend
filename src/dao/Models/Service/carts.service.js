@@ -1,6 +1,7 @@
 //@ts-check
-import cartsModel from "../Models/carts.models.js";
-import productsModel from "../Models/products.models.js";
+
+import cartsModel from "../mongoose/carts.models.js";
+import productsModel from "../mongoose/products.models.js";
 import { PServices } from "./productos.service.js";
 
 class Carts {

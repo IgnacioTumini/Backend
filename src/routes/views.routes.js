@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { CServices } from "../dao/Service/carts.service.js";
-import { PServices } from "../dao/Service/productos.service.js";
+
 import { authenticate } from "../Middlewares/Authenticate.js";
+import { PServices } from "../dao/Models/Service/productos.service.js";
+import { CServices } from "../dao/Models/Service/carts.service.js";
 
 const router = Router();
 
@@ -26,7 +27,7 @@ router.get("/", (req, res) => {
 });
 
 //CHATBOX
-router.get("/chat", (req, res) => {
+router.get("/chat", authenticate, (req, res) => {
   res.render("chat");
 });
 // RENDER DEL DETALLE DEL PRODUCTO

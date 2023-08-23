@@ -1,8 +1,8 @@
 import { Router } from "express";
-import userModel from "../dao/Models/users.models.js";
 import cookieParser from "cookie-parser";
-import { createHast, isValidPassword } from "../config.js";
 import passport from "passport";
+import userModel from "../dao/Models/mongoose/users.models.js";
+import { createHast } from "../config.js";
 
 const router = Router();
 router.use(cookieParser());

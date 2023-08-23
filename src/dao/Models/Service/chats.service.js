@@ -1,4 +1,4 @@
-import messageModel from "../Models/chat.models.js";
+import messageModel from "../mongoose/chat.models.js";
 
 export default class Chat {
   constructor() {}

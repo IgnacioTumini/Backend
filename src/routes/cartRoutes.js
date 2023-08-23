@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { cartController } from "../controller/cartsController.js";
+import { checkUser } from "../Middlewares/Authenticate.js";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.get("/:cid", cartController.getCartById);
 router.post("/", cartController.createCart);
 
 // POST AÑADE UN PRODUCTO A UN CARRITO, EN CASO DE QUE EXISTA, LE SUMA 1 A QUANTITY
-router.post("/:cid/product/:pid", cartController.addProductCart);
+router.post("/:cid/product/:pid", checkUser, cartController.addProductCart);
 
 //ELIMINAR TODOS LOS PRODUCTOS DEL CARRITO
 router.delete("/:cid", cartController.deleteCart);

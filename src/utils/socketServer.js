@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
-import { PServices } from "../dao/Service/productos.service.js";
-import Chat from "../dao/Service/chats.service.js";
+
+import Chat from "../dao/Models/Service/chats.service.js";
+import { PServices } from "../dao/Models/Service/productos.service.js";
 
 const CS = new Chat();
 

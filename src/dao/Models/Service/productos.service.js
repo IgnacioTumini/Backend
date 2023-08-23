@@ -1,4 +1,4 @@
-import productsModel from "../Models/products.models.js";
+import productsModel from "../mongoose/products.models.js";
 
 class Products {
   constructor() {}

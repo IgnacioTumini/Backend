@@ -1,5 +1,5 @@
-import { CServices } from "../dao/Service/carts.service.js";
-import { PServices } from "../dao/Service/productos.service.js";
+import { CServices } from "../dao/Models/Service/carts.service.js";
+import { PServices } from "../dao/Models/Service/productos.service.js";
 
 class CartController {
   getAll = async (req, res) => {

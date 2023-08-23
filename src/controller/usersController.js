@@ -1,4 +1,4 @@
-import { UServices } from "../dao/Service/users.service.js";
+import { UServices } from "../dao/Models/Service/users.service.js";
 
 class UserController {
   getAll = async (req, res) => {

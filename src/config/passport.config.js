@@ -1,11 +1,10 @@
 import passport from "passport";
 import local from "passport-local";
-import userModel from "../dao/Models/users.models.js";
+import userModel from "../dao/Models/mongoose/users.models.js";
 import { createHast, isValidPassword } from "../config.js";
 import GitHubStrategy from "passport-github2";
-
-import { UServices } from "../dao/Service/users.service.js";
-import { CServices } from "../dao/Service/carts.service.js";
+import { UServices } from "../dao/Models/Service/users.service.js";
+import { CServices } from "../dao/Models/Service/carts.service.js";
 
 const LocalStrategy = local.Strategy;
 
