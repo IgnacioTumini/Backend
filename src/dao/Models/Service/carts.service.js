@@ -110,5 +110,9 @@ class Carts {
       throw error;
     }
   }
+  async purchase(cid) {
+    const userCart = await cartsModel.findById(cid);
+    return userCart;
+  }
 }
 export const CServices = new Carts();

@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { cartController } from "../controller/cartsController.js";
 import { checkUser } from "../Middlewares/Authenticate.js";
+import { ticketsController } from "../controller/ticketsController.js";
 
 const router = Router();
 
@@ -23,6 +24,6 @@ router.delete("/:cid", cartController.deleteCart);
 // ELIMINAR DEL CARRITO EL PRODUCTO SELECCIONADO
 router.delete("/:cid/products/:pid", cartController.deleteProductInCart);
 
-router.get("/:cid/purchase", cartController.purchase);
+router.get("/:cid/purchase", ticketsController.createTicket);
 
 export default router;
