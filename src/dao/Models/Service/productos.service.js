@@ -137,10 +137,19 @@ class Products {
 
     return producById._doc;
   }
-  async update(id, title, description, price, thumbnail, code, stock) {
-    const userUptaded = await productsModel.updateOne(
+  async updateProduct({
+    id,
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    category,
+  }) {
+    const userUptaded = await productsModel.findByIdAndUpdate(
       { _id: id },
-      { title, description, price, thumbnail, code, stock }
+      { title, description, price, thumbnail, code, stock, category }
     );
     return userUptaded;
   }

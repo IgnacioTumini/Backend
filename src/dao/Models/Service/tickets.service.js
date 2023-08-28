@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import ticketModel from "../mongoose/tickets.models.js";
 import { CServices } from "./carts.service.js";
 import { PServices } from "./productos.service.js";
@@ -41,18 +42,28 @@ class TicketService {
 
     // cuando se genera la compra, filtrar entre los que se compraron y los que no
     //en caso de que no hay stock devolver los productos que no se pudieron comprar
-    const ticketCreated = await ticketModel.create({
-      code,
-      purchase_datetime,
-      amount,
-      purchaser: email,
-    });
-    await CServices.cartOutStock(cid, cartFilterOutStock);
-    return {
-      message: "Estos productos no se pudieron comprar",
-      payload: cartFilterOutStock,
-      ticket: ticketCreated,
-    };
+    if (cartFilter.length == 0) {
+      const response = {
+        message: "No se pudo comprar ningun producto",
+        payload: [],
+      };
+      return response;
+    } else {
+      const ticketCreated = await ticketModel.create({
+        code,
+        purchase_datetime,
+        amount,
+        purchaser: email,
+      });
+      console.log("antes del await");
+      await CServices.cartOutStock(cid, cartFilterOutStock);
+      const response = {
+        message: "Estos productos no se pudieron comprar",
+        payload: cartFilterOutStock,
+        ticket: ticketCreated,
+      };
+      return response;
+    }
   }
   async verifyCart(cid, user) {
     const cart = await CServices.getCartById(cid);

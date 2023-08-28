@@ -12,8 +12,8 @@ class TicketsController {
     try {
       const cid = req.params.cid;
       const user = req.session.user;
-      const ticketCreated = await TServices.createTicket(cid, user);
-      return ticketCreated;
+      const response = await TServices.createTicket(cid, user);
+      return res.json(response);
     } catch (error) {
       res.send("error se pudrio todo");
     }
