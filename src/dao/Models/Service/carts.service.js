@@ -97,7 +97,20 @@ class Carts {
     }
   }
 
-  async deleteCart({ cid }) {
+  async cartOutStock(cid, cart) {
+    try {
+      const updatedCart = await cartsModel.findOneAndUpdate(
+        { _id: cid },
+        { products: cart },
+        { new: true }
+      );
+      return updatedCart;
+    } catch (error) {
+      throw new error();
+    }
+  }
+
+  async deleteCart(cid) {
     try {
       const updatedCart = await cartsModel.findOneAndUpdate(
         { _id: cid },

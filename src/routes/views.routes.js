@@ -47,11 +47,12 @@ router.get("/product/:pid", async (req, res) => {
 // RENDER DEL CARRITO
 router.get("/cart-user", async (req, res) => {
   try {
+    console.log(req.session.user);
     let { _id } = req.session.user;
+
     let userFound = await userController.getUserById(_id);
     const cartFound = await CServices.getCartById(userFound.cid);
     const plainCart = cartFound.products.map((doc) => doc.toObject());
-    //console.log(plainCart);
     return res.render("cart", { plainCart });
   } catch (e) {
     return res.render("error");
