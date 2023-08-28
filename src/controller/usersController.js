@@ -69,6 +69,10 @@ class UserController {
       });
     }
   };
+  async getUserById(id) {
+    const user = await UServices.getUserById(id);
+    return user;
+  }
   delete = async (req, res) => {
     try {
       const { id } = req.params;

@@ -1,3 +1,7 @@
+.header {
+  background-color: white;
+}
+
 .card {
   background-color: lightblue;
   display: flex;

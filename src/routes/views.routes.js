@@ -3,6 +3,7 @@ import { Router } from "express";
 import { authenticate } from "../Middlewares/Authenticate.js";
 import { PServices } from "../dao/Models/Service/productos.service.js";
 import { CServices } from "../dao/Models/Service/carts.service.js";
+import { userController } from "../controller/usersController.js";
 
 const router = Router();
 
@@ -44,16 +45,16 @@ router.get("/product/:pid", async (req, res) => {
   }
 });
 // RENDER DEL CARRITO
-router.get("/cart/:cid", async (req, res) => {
+router.get("/cart-user", async (req, res) => {
   try {
-    const { cid } = req.params;
-    const foundcart = await CServices.getCartById(cid);
-    console.log(foundcart);
-    const plainCart = foundcart.products.map((doc) => doc.toObject());
-    console.log(plainCart);
+    let { _id } = req.session.user;
+    let userFound = await userController.getUserById(_id);
+    const cartFound = await CServices.getCartById(userFound.cid);
+    const plainCart = cartFound.products.map((doc) => doc.toObject());
+    //console.log(plainCart);
     return res.render("cart", { plainCart });
-  } catch (error) {
-    res.render("error");
+  } catch (e) {
+    return res.render("error");
   }
 });
 
