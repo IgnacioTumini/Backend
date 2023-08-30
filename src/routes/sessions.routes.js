@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import userModel from "../dao/Models/mongoose/users.models.js";
 import { createHast } from "../config.js";
+import UsersDTO from "../controller/DTO/users.dto.js";
 
 const router = Router();
 router.use(cookieParser());
@@ -79,7 +80,8 @@ router.post(
 );
 router.get("/current", async (req, res) => {
   let user = req.session.user;
-  res.send({ message: "User", payload: user });
+  let userDTO = new UsersDTO(user);
+  res.send({ message: "User", payload: userDTO });
 });
 
 router.get("/faillogin", async (req, res) => {
