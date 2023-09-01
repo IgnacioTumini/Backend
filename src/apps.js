@@ -12,12 +12,13 @@ import productRouter from "./routes/productRoutes.js";
 import sessionRouter from "./routes/sessions.routes.js";
 import cookierRouter from "./routes/cookies.routes.js";
 import userRouter from "./routes/users.routes.js";
-import { checkAdmin } from "./Middlewares/Authenticate.js";
+import { authenticate, checkAdmin } from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import passport from "passport";
 import { connectMongo } from "./utils/dbConection.js";
 import { connectSocketServer } from "./utils/SocketServer.js";
 import env from "./config/enviroment.config.js";
+import nodemailer from "nodemailer";
 
 console.log(env);
 
@@ -67,7 +68,7 @@ app.use("/api/product", productRouter);
 app.use("/api/users", userRouter);
 
 //ROUTES RENDERS
-app.use("/realtimeproducts", checkAdmin, realTimeProductsRoutes);
+app.use("/realtimeproducts", authenticate, checkAdmin, realTimeProductsRoutes);
 app.use("/", homeRouter);
 app.use("/", viewsRouter);
 app.use("/cookie", cookierRouter);
@@ -78,6 +79,35 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 app.use(express.static(`${__dirname}/public`));
 
+////NODEMAILER////
+
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  port: 587,
+  auth: {
+    user: env.gmail,
+    pass: env.pass,
+  },
+});
+app.get("/mail", async (req, res) => {
+  try {
+    const result = await transport.sendMail({
+      from: env.gmail,
+      to: " luxornacho@gmail.com, ignacio.tumini@hotmail.com  ",
+      subject: "Esto es una prueba de un mail automatico",
+      html: ` 
+      <div>
+        esto es un mail de prueba
+      </div>`,
+    });
+    console.log(result);
+    res.send("Email send successfully");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+////FIN NODEMAILER////
 // EN CASO DE QUE LA RUTA NO EXISTA
 app.use("*", (req, res) => {
   res.send("No existe esta direccion");

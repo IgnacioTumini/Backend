@@ -45,7 +45,7 @@ router.get("/product/:pid", async (req, res) => {
   }
 });
 // RENDER DEL CARRITO
-router.get("/cart-user", async (req, res) => {
+router.get("/cart-user", authenticate, async (req, res) => {
   try {
     console.log(req.session.user);
     let { _id } = req.session.user;
