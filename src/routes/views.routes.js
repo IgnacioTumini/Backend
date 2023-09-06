@@ -59,4 +59,22 @@ router.get("/cart-user", authenticate, async (req, res) => {
   }
 });
 
+router.get("/mockingproducts", async (req, res) => {
+  try {
+    const products = [];
+
+    for (let i = 0; i < 100; i++) {
+      products.push(generateProduct());
+    }
+    res.send({ status: "success", payload: products });
+  } catch (e) {
+    CustomError.createError({
+      name: "error-mockingproducts",
+      cause: "No se pudieron crear los 100 productos",
+      message: "Intentelo otra vez, si el error persiste lo solucionaremos",
+      code: EError.ADD_PRODUCT_ERROR,
+    });
+  }
+});
+
 export default router;
