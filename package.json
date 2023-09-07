@@ -4,6 +4,9 @@
   "description": "",
   "main": "ProductManager.js",
   "type": "module",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "test": "echo && exit 1",
     "dev": "nodemon ./src/apps.js --mode DEVELOPMENT",
