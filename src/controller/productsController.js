@@ -1,15 +1,15 @@
 import { PServices } from "../dao/Models/Service/productos.service.js";
-import importModels from "../dao/Factory.js";
+//import importModels from "../dao/Factory.js";
 import ProductsDTO from "./DTO/products.dto.js";
 
-const models = await importModels();
-const productModel = models.products;
+//const models = await importModels();
+//const productModel = models.products;
 
 class ProductController {
   getAll = async (req, res) => {
     try {
       const queryParams = req.query;
-      const response = await productModel.getAll(queryParams);
+      const response = await PServices.getAll(queryParams);
       return res.status(200).json(response);
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ class ProductController {
       const queryParams = req.query;
       const { limit, category, sort, stock } = req.query;
 
-      const response = await productModel.getAll(queryParams);
+      const response = await PServices.getAll(queryParams);
       const products = response.payload.products.map((product) => {
         return {
           _id: product._id.toString(),
@@ -56,7 +56,7 @@ class ProductController {
   getById = async (req, res) => {
     try {
       const { id } = req.params;
-      const productFound = await productModel.getProductById(id);
+      const productFound = await PServices.getProductById(id);
 
       if (productFound) {
         return res.status(201).json({
@@ -91,7 +91,7 @@ class ProductController {
         stock,
       });
 
-      const productCreated = await productModel.create(productsDTO);
+      const productCreated = await PServices.create(productsDTO);
 
       return res.status(201).json({
         status: "success",
@@ -121,7 +121,7 @@ class ProductController {
       const { id } = req.params;
       const { title, description, price, thumbnail, code, stock } = req.body;
       try {
-        const productUptaded = await productModel.update(
+        const productUptaded = await PServices.update(
           id,
           title,
           description,
@@ -162,7 +162,7 @@ class ProductController {
   getProductRealTime = async (req, res) => {
     try {
       let title = "Listado de productos en tiempo real";
-      const response = await productModel.getProductRealTime();
+      const response = await PServices.getProductRealTime();
 
       const products = response.map((product) => {
         return {
@@ -184,7 +184,7 @@ class ProductController {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      const result = await productModel.delete(id);
+      const result = await PServices.delete(id);
       if (result?.deletedCount > 0) {
         return res.status(200).json({
           status: "success",
