@@ -4,6 +4,9 @@ import { authenticate } from "../Middlewares/Authenticate.js";
 import { PServices } from "../dao/Models/Service/productos.service.js";
 import { CServices } from "../dao/Models/Service/carts.service.js";
 import { userController } from "../controller/usersController.js";
+import CustomError from "../Errors/custom.errors.js";
+import EError from "../Errors/enum.js";
+import { generateProduct } from "../utils/productFaker.js";
 
 const router = Router();
 
@@ -62,16 +65,15 @@ router.get("/cart-user", authenticate, async (req, res) => {
 router.get("/mockingproducts", async (req, res) => {
   try {
     const products = [];
-
     for (let i = 0; i < 100; i++) {
-      products.push(generateProduct());
+      products.push(productsFaker());
     }
     res.send({ status: "success", payload: products });
   } catch (e) {
     CustomError.createError({
       name: "error-mockingproducts",
-      cause: "No se pudieron crear los 100 productos",
-      message: "Intentelo otra vez, si el error persiste lo solucionaremos",
+      cause: "No se pudieron crear los productos",
+      message: "Intentelo otra vez",
       code: EError.ADD_PRODUCT_ERROR,
     });
   }
