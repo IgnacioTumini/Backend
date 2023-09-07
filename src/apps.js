@@ -16,9 +16,10 @@ import { authenticate, checkAdmin } from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import passport from "passport";
 import { connectMongo } from "./utils/dbConection.js";
-import { connectSocketServer } from "./utils/SocketServer.js";
+
 import env from "./config/enviroment.config.js";
 import nodemailer from "nodemailer";
+import { connectSocketServer } from "./utils/socket-server.js";
 
 console.log(env);
 
@@ -29,8 +30,8 @@ const PORT = env.port;
 const httpServer = app.listen(PORT, () =>
   console.log(`Server up http://localhost:${PORT}`)
 );
-connectSocketServer(httpServer);
 
+connectSocketServer(httpServer);
 // CONECCION CON LA BASE DE DATOS
 connectMongo();
 

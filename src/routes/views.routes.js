@@ -6,7 +6,7 @@ import { CServices } from "../dao/Models/Service/carts.service.js";
 import { userController } from "../controller/usersController.js";
 import CustomError from "../Errors/custom.errors.js";
 import EError from "../Errors/enum.js";
-import { generateProduct } from "../utils/productFaker.js";
+import { productsFaker } from "../utils/productFaker.js";
 
 const router = Router();
 
