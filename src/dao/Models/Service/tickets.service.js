@@ -55,7 +55,7 @@ class TicketService {
         amount,
         purchaser: email,
       });
-      console.log("antes del await");
+
       await CServices.cartOutStock(cid, cartFilterOutStock);
       const response = {
         message: "Estos productos no se pudieron comprar",
