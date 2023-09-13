@@ -22,4 +22,5 @@ export default {
   persistence: process.env.PERSISTENCE,
   gmail: process.env.GOOGLE_EMAIL,
   pass: process.env.GOOGLE_PASS,
+  loggerLevel: process.env.LOGGER_LEVEL,
 };

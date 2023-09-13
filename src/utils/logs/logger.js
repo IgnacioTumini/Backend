@@ -1,4 +1,5 @@
 import winston from "winston";
+import env from "../../config/enviroment.config.js";
 
 const levelOptions = {
   levels: {
@@ -24,7 +25,7 @@ const logger = winston.createLogger({
   levels: levelOptions.levels,
   transports: [
     new winston.transports.Console({
-      level: "info",
+      level: env.loggerLevel,
       format: winston.format.combine(
         winston.format.colorize({ colors: levelOptions.colors }),
         winston.format.simple()
