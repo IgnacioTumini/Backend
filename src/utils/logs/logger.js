@@ -36,7 +36,6 @@ const logger = winston.createLogger({
       level: "warning",
       format: winston.format.simple(),
     }),
-    //new winston.transports.File({ filename:'./errores.log', level:'warn'})
   ],
 });
 export const addLogger = (req, res, next) => {
@@ -47,7 +46,7 @@ export const addLogger = (req, res, next) => {
   req.logger.warning(
     `${req.method} en ${req.url} -${new Date().toLocaleTimeString()}`
   );
-  //req.logger.console.warn();(`${req.method} en ${req.url} -${new Date().toLocaleTimeString()}`)
+
   next();
 };
 
