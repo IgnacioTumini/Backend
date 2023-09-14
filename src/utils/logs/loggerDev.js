@@ -26,7 +26,7 @@ const colors = {
 
 winston.addColors(colors);
 
-export const logger = winston.createLogger({
+export const loggerDev = winston.createLogger({
   levels,
   format: combine(
     colorize({ all: true }),

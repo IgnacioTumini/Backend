@@ -7,9 +7,11 @@ import { userController } from "../controller/usersController.js";
 import CustomError from "../Errors/custom.errors.js";
 import EError from "../Errors/enum.js";
 import { productsFaker } from "../utils/productFaker.js";
-import { logger } from "../utils/logs/loggerProd.js";
+import importLogger from "../utils/logs/factory.logs.js";
 
 const router = Router();
+const loggers = await importLogger();
+console.log(loggers);
 
 //RENDER DE REGISTRO
 router.get("/register", (req, res) => {
@@ -64,12 +66,13 @@ router.get("/cart-user", authenticate, async (req, res) => {
 });
 
 router.get("/test-logger", (req, res) => {
-  logger.error("soy un error");
-  logger.warn("soy un warn");
-  logger.info("soy un info");
-  logger.http("soy un http");
-  logger.verbose("soy un verbose");
-  logger.debug("soy un debug");
+  loggers.error("soy un error");
+  loggers.warn("soy un warn");
+  loggers.info("soy un info");
+  loggers.http("soy un http");
+  loggers.verbose("soy un verbose");
+  loggers.debug("soy un debug");
+
   res.send("probando");
 });
 
