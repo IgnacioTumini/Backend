@@ -21,8 +21,6 @@ import env from "./config/enviroment.config.js";
 import nodemailer from "nodemailer";
 import { connectSocketServer } from "./utils/socket-server.js";
 
-console.log(env);
-
 const app = express();
 const PORT = env.port;
 

@@ -7,6 +7,7 @@ import { userController } from "../controller/usersController.js";
 import CustomError from "../Errors/custom.errors.js";
 import EError from "../Errors/enum.js";
 import { productsFaker } from "../utils/productFaker.js";
+import { logger } from "../utils/logs/loggerProd.js";
 
 const router = Router();
 
@@ -60,6 +61,16 @@ router.get("/cart-user", authenticate, async (req, res) => {
   } catch (e) {
     return res.render("error");
   }
+});
+
+router.get("/test-logger", (req, res) => {
+  logger.error("soy un error");
+  logger.warn("soy un warn");
+  logger.info("soy un info");
+  logger.http("soy un http");
+  logger.verbose("soy un verbose");
+  logger.debug("soy un debug");
+  res.send("probando");
 });
 
 router.get("/mockingproducts", async (req, res) => {
