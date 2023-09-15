@@ -20,13 +20,14 @@ import { connectMongo } from "./utils/dbConection.js";
 import env from "./config/enviroment.config.js";
 import nodemailer from "nodemailer";
 import { connectSocketServer } from "./utils/socket-server.js";
+import { logger } from "./utils/logs/logger.js";
 
 const app = express();
 const PORT = env.port;
 
 // LEVANTAR EL SERVIDOR
 const httpServer = app.listen(PORT, () =>
-  console.log(`Server up http://localhost:${PORT}`)
+  logger.http(`Server up http://localhost:${PORT}`)
 );
 
 connectSocketServer(httpServer);

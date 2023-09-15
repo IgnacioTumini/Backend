@@ -1,5 +1,6 @@
 import { connect } from "mongoose";
 import env from "../config/enviroment.config.js";
+import { logger } from "./logs/logger.js";
 
 export async function connectMongo() {
   try {
@@ -8,9 +9,9 @@ export async function connectMongo() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Mongo connected!");
+    logger.info("Mongo connected!");
   } catch (e) {
-    console.log(e);
+    logger.info(e);
     throw "can not connect to the db";
   }
 }

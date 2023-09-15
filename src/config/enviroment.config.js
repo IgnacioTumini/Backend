@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { Command } from "commander";
+import { logger } from "../utils/logs/logger.js";
 
 const program = new Command();
 program.option("--mode <mode>", "Modo de trabajo", "DEVELOPMENT");
