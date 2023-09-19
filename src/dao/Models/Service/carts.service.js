@@ -1,5 +1,6 @@
 //@ts-check
 
+import { logger } from "../../../utils/logs/logger.js";
 import cartsModel from "../mongoose/carts.models.js";
 import productsModel from "../mongoose/products.models.js";
 import { PServices } from "./productos.service.js";
@@ -49,7 +50,7 @@ class Carts {
 
       return updatedCart;
     } catch (error) {
-      throw error;
+      throw logger.error("No se pudo agregar el producto al carrito");
     }
   };
   getCartById = async (cid) => {
