@@ -15,7 +15,7 @@ const router = Router();
 router.get("/register", (req, res) => {
   res.render("register");
 });
-router.get("/resetPassword", (req, res) => {
+router.get("/recover-pass", (req, res) => {
   res.render("resetPassword");
 });
 

@@ -21,6 +21,7 @@ import env from "./config/enviroment.config.js";
 import nodemailer from "nodemailer";
 import { connectSocketServer } from "./utils/socket-server.js";
 import { logger } from "./utils/logs/logger.js";
+import { recoverPassRoutes } from "./routes/recover-pass.routes.js";
 
 const app = express();
 const PORT = env.port;
@@ -72,6 +73,7 @@ app.use("/realtimeproducts", authenticate, checkAdmin, realTimeProductsRoutes);
 app.use("/", homeRouter);
 app.use("/", viewsRouter);
 app.use("/cookie", cookierRouter);
+app.use("/recover-pass", recoverPassRoutes);
 
 // HANDLEBARS
 app.engine("handlebars", handlebars.engine());

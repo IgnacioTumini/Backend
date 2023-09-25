@@ -22,6 +22,10 @@ class User {
     const user = await userModel.findById({ _id: id });
     return user;
   }
+  async getEmail(email) {
+    const user = await userModel.findOne({ email: email }, {});
+    return user;
+  }
   //create
   create = async (user) => {
     let result = await userModel.create(user);
