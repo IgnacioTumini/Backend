@@ -23,15 +23,19 @@ class Carts {
     return { message: "Carrito creado correctamente", cart: cart };
   };
 
-  addProductCart = async (cid, pid, Pquantity) => {
+  addProductCart = async (cid, pid, Pquantity, email) => {
     try {
       const cart = await cartsModel.findById(cid);
       const product = await PServices.getProductById(pid);
+
       if (!cart) {
         throw new Error("Cart not found");
       }
       if (!product) {
         throw new Error("Product not found");
+      }
+      if (email === product.owner) {
+        return { message: "No podes comprar tu propio producto" };
       }
       const findProdInCart = await cartsModel.findOne({
         products: { $elemMatch: { product: pid } },

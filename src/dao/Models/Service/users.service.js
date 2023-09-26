@@ -41,6 +41,29 @@ class User {
     let result = await userModel.updateOne({ _id: id }, { $set: user });
     return result;
   };
+  updateRole = async (uid) => {
+    console.log("llegue service");
+    const user = await this.getUserById(uid);
+    if (user) {
+      if (user.role === "admin") {
+        return { message: "no podes modificar tu rol, sos admin" };
+      } else {
+        if (user.role === "premium") {
+          let result = await userModel.findOneAndUpdate(
+            { _id: uid },
+            { role: "user" }
+          );
+          return result;
+        } else {
+          let result = await userModel.findOneAndUpdate(
+            { _id: uid },
+            { role: "premium" }
+          );
+          return result;
+        }
+      }
+    }
+  };
 
   async authentication(username, password) {
     try {

@@ -81,6 +81,9 @@ class ProductController {
     try {
       const { title, description, category, price, thumbnail, code, stock } =
         req.body;
+
+      const owner = req.session.user.email;
+
       let productsDTO = new ProductsDTO({
         title,
         description,
@@ -89,6 +92,7 @@ class ProductController {
         thumbnail,
         code,
         stock,
+        owner,
       });
 
       const productCreated = await PServices.create(productsDTO);
@@ -96,16 +100,7 @@ class ProductController {
       return res.status(201).json({
         status: "success",
         msg: "product created",
-        payload: {
-          id: productCreated._id,
-          title: productCreated.title,
-          description: productCreated.description,
-          category: productCreated.category,
-          price: productCreated.price,
-          thumbnail: productCreated.thumbnail,
-          code: productCreated.code,
-          stock: productCreated.stock,
-        },
+        payload: productCreated,
       });
     } catch (e) {
       console.log(e);
@@ -184,7 +179,9 @@ class ProductController {
   delete = async (req, res) => {
     try {
       const { id } = req.params;
-      const result = await PServices.delete(id);
+      const userEmail = req.session.user.email;
+      const role = req.session.user.role;
+      const result = await PServices.delete(id, userEmail, role);
       if (result?.deletedCount > 0) {
         return res.status(200).json({
           status: "success",

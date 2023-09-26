@@ -22,11 +22,13 @@ class CartController {
   addProductCart = async (req, res) => {
     let cartId = req.params.cid;
     let productId = req.params.pid;
+    let email = req.session.user.email;
     const { Pquantity = 1 } = req.body;
     const addProduct = await CServices.addProductCart(
       cartId,
       productId,
-      Pquantity
+      Pquantity,
+      email
     );
     res.send(addProduct);
   };

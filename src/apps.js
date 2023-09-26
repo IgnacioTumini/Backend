@@ -112,6 +112,6 @@ app.get("/mail", async (req, res) => {
 ////FIN NODEMAILER////
 
 // EN CASO DE QUE LA RUTA NO EXISTA
-app.use("*", (req, res) => {
+/*app.use("*", (req, res) => {
   res.send("No existe esta direccion");
-});
+});*/

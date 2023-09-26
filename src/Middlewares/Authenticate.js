@@ -8,7 +8,7 @@ export function authenticate(req, res, next) {
 }
 // verifica si es admin
 export function checkAdmin(req, res, next) {
-  if (req.session?.user && req.session.user.role == "admin") {
+  if (req.session.user.role == "admin") {
     return next();
   } else {
     return res.render("error");
@@ -20,5 +20,13 @@ export function checkUser(req, res, next) {
     return next();
   } else {
     return res.send({ message: "No correspode al carrito del usuario" });
+  }
+}
+// agregar productos admin y premium
+export function PublishCredentials(req, res, next) {
+  if (req.session.user.role == "admin" || "premium") {
+    return next();
+  } else {
+    return res.render("error");
   }
 }

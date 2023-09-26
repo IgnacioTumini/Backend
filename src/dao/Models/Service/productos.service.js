@@ -115,6 +115,7 @@ class Products {
     code,
     stock,
     category,
+    owner,
   }) {
     const productCreated = await productsModel.create({
       title,
@@ -124,6 +125,7 @@ class Products {
       code,
       stock,
       category,
+      owner,
     });
     return productCreated;
   }
@@ -153,9 +155,16 @@ class Products {
     );
     return userUptaded;
   }
-  async delete(id) {
-    const result = await productsModel.deleteOne({ _id: id });
-    return result;
+  async delete(id, email, role) {
+    const product = await this.getProductById(id);
+    if (product) {
+      if (product.owner === email || role === "admin") {
+        const result = await productsModel.deleteOne({ _id: id });
+        return result;
+      }
+    } else {
+      return { message: "No se encontro el producto" };
+    }
   }
 }
 export const PServices = new Products();
