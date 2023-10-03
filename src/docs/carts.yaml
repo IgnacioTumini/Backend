@@ -7,6 +7,12 @@ paths:
       responses:
         "200":
           description: Los Carritos fueron consultados correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
         "500":
           description: No pudo entregar la informacion
     post:
@@ -73,5 +79,62 @@ components:
       type: object
       properties:
         products:
-
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                $ref: "#/components/schemas/Product"
+              quantity:
+                type: integer
+                description: The quantity of the product in the cart.
       example:
+        products:
+          - product:
+              title: Sample Product 1
+              category: Sample Category
+              description: Sample Product Description
+              price: 19.99
+              thumbnail: sample-thumbnail.jpg
+              code: PROD123
+              stock: 50
+              owner: admin
+            quantity: 2
+          - product:
+              title: Sample Product 2
+              category: Another Category
+              description: Another Product Description
+              price: 29.99
+              thumbnail: another-thumbnail.jpg
+              code: PROD456
+              stock: 30
+              owner: admin
+            quantity: 1
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          required: true
+        category:
+          type: string
+          required: true
+        description:
+          type: string
+          required: true
+        price:
+          type: number
+          required: true
+        thumbnail:
+          type: string
+          required: true
+        code:
+          type: string
+          required: true
+        stock:
+          type: number
+          required: true
+        owner:
+          type: string
+          required: true
+          default: admin
