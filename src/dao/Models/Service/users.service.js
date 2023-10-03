@@ -42,7 +42,6 @@ class User {
     return result;
   };
   updateRole = async (uid) => {
-    console.log("llegue service");
     const user = await this.getUserById(uid);
     if (user) {
       if (user.role === "admin") {

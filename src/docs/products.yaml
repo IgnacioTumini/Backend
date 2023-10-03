@@ -1,0 +1,124 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtiene los Productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron consultados correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: No pudo entregar la informacion
+    post:
+      summary: Crea un producto
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Se creo un producto correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: No pudo entregar la informacion
+  /api/products/{ProductId}:
+    get:
+      summary: Obtiene un producto por su id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: String
+      responses:
+        "200":
+          description: El producto fue consultado correctamente
+        "500":
+          description: No pudo entregar la informacion
+    put:
+      summary: Actualizar un Producto
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: String
+      responses:
+        "200":
+          description: El producto fue actualizado correctamente
+        "500":
+          description: No pudo entregar la informacion
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: String
+      responses:
+        "200":
+          description: El producto fue eliminado correctamente
+        "500":
+          description: No pudo entregar la informacion
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo
+        title:
+          type: String
+          description: El nombre del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        price:
+          type: String
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: Imagen del producto
+        code:
+          type: String
+          description: codigo
+        stock:
+          type: String
+          description: Cantidad del producto
+        category:
+          type: String
+          description: Categoria del producto
+        owner:
+          type: String
+          description: Vendedor del producto
+      example:
+        _id: ObjectId('1234456ABCD')
+        title: Pantalon de jean
+        Description: Pantalon de jean largo azul
+        price: 20
+        thumbnail: imagen
+        code: 5616sg65
+        stock: 12
+        category: Pantalon
+        owner: ejemplo@mail.com

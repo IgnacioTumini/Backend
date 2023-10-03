@@ -16,6 +16,8 @@ import { authenticate, checkAdmin } from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import passport from "passport";
 import { connectMongo } from "./utils/dbConection.js";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 import env from "./config/enviroment.config.js";
 import nodemailer from "nodemailer";
@@ -81,37 +83,30 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 app.use(express.static(`${__dirname}/public`));
 
-////NODEMAILER////
+// DOCUMENTACION SWAGGER //
 
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  port: 587,
-  auth: {
-    user: env.gmail,
-    pass: env.pass,
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: " Documentacion de las APIs",
+      description: " Informacion de Productos y de el Carrito",
+      version: "1.0.0",
+      contact: {
+        name: "Ignacio Tumini",
+        url: "https://www.linkedin.com/in/ignacio-tumini-949506233/",
+      },
+    },
   },
-});
-app.get("/mail", async (req, res) => {
-  try {
-    const result = await transport.sendMail({
-      from: env.gmail,
-      to: " luxornacho@gmail.com, ignacio.tumini@hotmail.com  ",
-      subject: "Esto es una prueba de un mail automatico",
-      html: ` 
-      <div>
-        esto es un mail de prueba
-      </div>`,
-    });
-    console.log(result);
-    res.send("Email send successfully");
-  } catch (error) {
-    console.log(error);
-  }
-});
 
-////FIN NODEMAILER////
+  apis: [`${process.cwd()}/src/docs/*.yaml`],
+};
+const spec = swaggerJsdoc(swaggerOptions);
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
+
+// FIN DOCUMENTACION SWAGGER //
 
 // EN CASO DE QUE LA RUTA NO EXISTA
-/*app.use("*", (req, res) => {
+app.use("*", (req, res) => {
   res.send("No existe esta direccion");
-});*/
+});

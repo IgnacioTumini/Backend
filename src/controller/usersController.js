@@ -37,14 +37,10 @@ class UserController {
   updateRole = async (req, res) => {
     try {
       const uid = req.params.uid;
-      
-
       const userUpdateRole = await UServices.updateRole(uid);
       return res.status(201).json({
         payload: userUpdateRole,
       });
-
-      
     } catch (error) {
       logger.error(error);
     }
