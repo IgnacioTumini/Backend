@@ -107,27 +107,13 @@ class Products {
     return products;
   }
 
-  async create({
-    title,
-    description,
-    price,
-    thumbnail,
-    code,
-    stock,
-    category,
-    owner,
-  }) {
-    const productCreated = await productsModel.create({
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-      category,
-      owner,
-    });
-    return productCreated;
+  async create(product) {
+    try {
+      const response = await productsModel.create(product);
+      return { status: 200, message: `Product added.`, payload: response };
+    } catch (error) {
+      throw error;
+    }
   }
   async getProductById(pid) {
     const producById = await productsModel.findOne(

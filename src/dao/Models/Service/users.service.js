@@ -6,36 +6,40 @@ class User {
     let users = await userModel.find().populate("cid.carts");
     return users.map((user) => user.toObject());
   };
-  async getOne(username) {
+
+  getOne = async (username) => {
     const user = await userModel.findOne(
       { username: username },
       { password: true }
     );
     return user;
-  }
+  };
+
   //getBy
   getBy = async (param) => {
     let result = await userModel.findOne(param).populate("cid.carts").lean();
     return result;
   };
-  async getUserById(id) {
+  getUserById = async (id) => {
     const user = await userModel.findById({ _id: id });
     return user;
-  }
-  async getEmail(email) {
+  };
+  getEmail = async (email) => {
     const user = await userModel.findOne({ email: email }, {});
     return user;
-  }
+  };
+
   //create
   create = async (user) => {
     let result = await userModel.create(user);
 
     return result;
   };
-  async delete(id) {
+  delete = async (id) => {
     const result = await userModel.deleteOne({ _id: id });
     return result;
-  }
+  };
+
   updateUser = async (id, user) => {
     delete user._id;
     let result = await userModel.updateOne({ _id: id }, { $set: user });
@@ -64,7 +68,7 @@ class User {
     }
   };
 
-  async authentication(username, password) {
+  authentication = async (username, password) => {
     try {
       const user = await userModel.findOne({
         username: username,
@@ -78,7 +82,7 @@ class User {
       console.error("Error authenticating user:", error);
       throw error;
     }
-  }
+  };
 }
 
 export const UServices = new User();

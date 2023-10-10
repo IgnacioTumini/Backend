@@ -8,7 +8,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "test": "echo && exit 1",
+    "test": "mocha test/sessions.router.test.js",
     "dev": "nodemon ./src/apps.js --mode DEVELOPMENT",
     "start": "node ./src/apps.js --mode PRODUCTION"
   },
@@ -47,6 +47,9 @@
     "winston": "^3.10.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2"
+    "@faker-js/faker": "^8.0.2",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }

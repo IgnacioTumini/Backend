@@ -1,9 +1,6 @@
 import { PServices } from "../dao/Models/Service/productos.service.js";
-//import importModels from "../dao/Factory.js";
-import ProductsDTO from "./DTO/products.dto.js";
 
-//const models = await importModels();
-//const productModel = models.products;
+import ProductsDTO from "./DTO/products.dto.js";
 
 class ProductController {
   getAll = async (req, res) => {
@@ -79,21 +76,13 @@ class ProductController {
   };
   create = async (req, res) => {
     try {
-      const { title, description, category, price, thumbnail, code, stock } =
-        req.body;
+      let newProduct = req.body;
+      newProduct.owner =
+        req.session.role === "admin"
+          ? req.session.role
+          : req.session.user.email;
 
-      const owner = req.session.user.email;
-
-      let productsDTO = new ProductsDTO({
-        title,
-        description,
-        category,
-        price,
-        thumbnail,
-        code,
-        stock,
-        owner,
-      });
+      let productsDTO = new ProductsDTO(newProduct);
 
       const productCreated = await PServices.create(productsDTO);
 
