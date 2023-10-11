@@ -5,6 +5,7 @@ import { createHast, isValidPassword } from "../config.js";
 import GitHubStrategy from "passport-github2";
 import { UServices } from "../dao/Models/Service/users.service.js";
 import { CServices } from "../dao/Models/Service/carts.service.js";
+import { logger } from "../utils/logs/logger.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -18,13 +19,13 @@ const initializedPassport = () => {
         try {
           let user = await UServices.getBy({ email: email });
           if (user) {
-            console.log("User already exists");
+            logger.info("User already exists");
             return done(null, false);
           }
           let userCart = await CServices.createCart();
-          console.log("pase del carrito");
+
           if (!userCart) {
-            console.log("Error en crear  un carrito para el usuario");
+            logger.error("Error en crear  un carrito para el usuario");
             return done(null, false);
           }
           if (
@@ -70,11 +71,10 @@ const initializedPassport = () => {
       },
       async (req, email, password, done) => {
         try {
-          console.log("----------------" + email);
           let user = await UServices.getBy({ email: email });
-          console.log("Ingrese aquí " + user);
+
           if (!user) {
-            console.log("User already No exits");
+            logger.error("User already No exits");
             return done(null, false);
           }
           if (!isValidPassword(user, password)) return done(null, false);
@@ -113,7 +113,7 @@ const initializedPassport = () => {
           if (!user) {
             let userCart = await CServices.createCart();
             if (!userCart) {
-              console.log("Error en crear un carrito para el usuario");
+              logger.error("Error en crear un carrito para el usuario");
               return done(null, false);
             }
             const newUser = {
@@ -125,15 +125,15 @@ const initializedPassport = () => {
               cid: userCart.cart._id.toString(),
             };
             let userCreated = await userModel.create(newUser);
-            console.log("User Registration succesful");
+
             return done(null, userCreated);
           } else {
-            console.log("User already exists");
+            logger.info("User already exists");
             return done(null, user);
           }
         } catch (e) {
-          console.log("Error en auth github");
-          console.log(e);
+          logger.error("Error en auth github");
+
           return done(e);
         }
       }

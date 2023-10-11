@@ -8,7 +8,7 @@ class RecoverPassController {
   recoveryPass = async (req, res) => {
     try {
       const { email } = req.body;
-      console.log(email);
+      logger.info(email);
       const user = await UServices.getEmail(email.toLowerCase());
       if (user) {
         const result = await RPServices.create({ email });

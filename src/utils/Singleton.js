@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import env from "../config/enviroment.config.js";
+import { logger } from "./logs/logger.js";
 
 export default class MongoSingleton {
   static instance;
@@ -13,12 +14,12 @@ export default class MongoSingleton {
 
   static getInstance() {
     if (this.instance) {
-      console.log("La coneccion ya existe");
+      logger.info("La coneccion ya existe");
       return this.instance;
     }
 
     this.instance = new MongoSingleton();
-    console.log("Conectado");
+    logger.info("Conectado");
 
     return this.instance;
   }

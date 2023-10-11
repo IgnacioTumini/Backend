@@ -73,7 +73,7 @@ class UserController {
         });
       }
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",
@@ -103,7 +103,7 @@ class UserController {
         });
       }
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",

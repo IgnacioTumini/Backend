@@ -1,5 +1,6 @@
 /*const fs = require("fs");*/
 import fs from "fs";
+import { logger } from "../logs/logger";
 
 export default class ProductManager {
   constructor(file) {
@@ -42,7 +43,7 @@ export default class ProductManager {
         return { error: "base de datos no encontrada" };
       }
     } catch (error) {
-      console.log("Error: ", error);
+      logger.error("Error: ", error);
     }
   }
   async getProducts() {
@@ -54,7 +55,7 @@ export default class ProductManager {
           return this.products;
         }
       } else {
-        console.log("No existe el archivo, por favor cree uno");
+        logger.error("No existe el archivo, por favor cree uno");
       }
     } catch (error) {
       throw new Error("Error: ", error);
@@ -78,7 +79,7 @@ export default class ProductManager {
           }
         }
       } else {
-        console.log("No existe el archivo, por favor cree uno");
+        logger.error("No existe el archivo, por favor cree uno");
       }
     } catch (error) {
       throw new Error("Error: ", error);
@@ -154,9 +155,9 @@ export default class ProductManager {
             this.file,
             JSON.stringify(this.products, null, "\t")
           );
-          console.log("Todos los productos han sido eliminados");
+          logger.info("Todos los productos han sido eliminados");
         } else {
-          console.log("No hay productos para eliminar");
+          logger.error("No hay productos para eliminar");
         }
       }
     } catch (error) {

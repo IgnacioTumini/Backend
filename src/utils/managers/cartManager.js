@@ -1,5 +1,6 @@
 import fs from "fs";
 import ProductManager from "./ProductManager.js";
+import { logger } from "../logs/logger.js";
 
 const PM = new ProductManager(`../src/Productos`);
 
@@ -27,7 +28,7 @@ export default class CartManager {
         return { Status: 400, error: "Base de datos no encontrada" };
       }
     } catch (error) {
-      console.log("Error: ", error);
+      logger.error("Error: ", error);
     }
   }
 
@@ -78,7 +79,7 @@ export default class CartManager {
         }
       }
     } catch (error) {
-      console.log("Error: ", error);
+      logger.error("Error: ", error);
     }
   }
 
@@ -139,13 +140,13 @@ export default class CartManager {
               this.file,
               JSON.stringify(this.carts, null, "\t")
             );
-            console.log("Producto eliminado correctamente");
+            logger.info("Producto eliminado correctamente");
           }
         } else {
-          console.log("Producto no encontrado");
+          logger.error("Producto no encontrado");
         }
       } else {
-        console.log("No existe el archivo, por favor cree uno");
+        logger.error("No existe el archivo, por favor cree uno");
       }
     } catch (error) {
       throw new Error("Error: ", error);

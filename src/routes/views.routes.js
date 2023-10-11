@@ -42,7 +42,6 @@ router.get("/product/:pid", async (req, res) => {
     const findProduct = await PServices.getProductById(pid);
     const cleanProduct = { id: findProduct._id.toString(), ...findProduct };
     delete cleanProduct._id;
-    console.log(cleanProduct);
     res.render("productDetail", { findProduct: cleanProduct });
   } catch (error) {
     res.render("error");
@@ -51,7 +50,7 @@ router.get("/product/:pid", async (req, res) => {
 // RENDER DEL CARRITO
 router.get("/cart-user", authenticate, async (req, res) => {
   try {
-    console.log(req.session.user);
+    logger.error(req.session.user);
     let { _id } = req.session.user;
 
     let userFound = await userController.getUserById(_id);

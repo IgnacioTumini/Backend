@@ -5,7 +5,6 @@ const dinamicListProducts = document.getElementById("validationCustom07");
 
 socket.on("products", (newProductList) => {
   let newProducts = "";
-  console.log(newProductList);
   newProductList.map((p) => {
     newProducts += `<div class="card">
                         <div>Nombre: ${p.title}</div>

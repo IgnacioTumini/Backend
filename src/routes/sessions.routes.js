@@ -4,6 +4,7 @@ import passport from "passport";
 import userModel from "../dao/Models/mongoose/users.models.js";
 import { createHast } from "../config.js";
 import UsersDTO from "../controller/DTO/users.dto.js";
+import { logger } from "../utils/logs/logger.js";
 
 const router = Router();
 router.use(cookieParser());
@@ -55,7 +56,7 @@ router.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/faillogin" }),
   async (req, res) => {
-    console.log("Probando el ingreso a la estrategia");
+    
 
     const { email, password, first_name, last_name, age, cid } = req.body;
 
@@ -85,7 +86,7 @@ router.get("/current", async (req, res) => {
 });
 
 router.get("/faillogin", async (req, res) => {
-  console.log("Failed Estrategy");
+  logger.error("Failed Estrategy");
   res.send({ error: "failed" });
 });
 

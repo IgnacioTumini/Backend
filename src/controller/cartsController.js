@@ -1,10 +1,10 @@
 import { CServices } from "../dao/Models/Service/carts.service.js";
 import { PServices } from "../dao/Models/Service/productos.service.js";
+import { logger } from "../utils/logs/logger.js";
 
 class CartController {
   getAll = async (req, res) => {
     let carts = await CServices.getAll();
-    console.log(carts);
     res.send({ status: "success", payload: carts });
   };
 
@@ -49,7 +49,7 @@ class CartController {
           .json({ status: "error", msg: "The indicated cart was not found" });
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       return res
         .status(500)
         .json({ status: "error", msg: "Internal Server Error" });

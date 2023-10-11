@@ -1,4 +1,5 @@
 import { PServices } from "../dao/Models/Service/productos.service.js";
+import { logger } from "../utils/logs/logger.js";
 
 import ProductsDTO from "./DTO/products.dto.js";
 
@@ -9,7 +10,7 @@ class ProductController {
       const response = await PServices.getAll(queryParams);
       return res.status(200).json(response);
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       return res.render("error");
     }
   };
@@ -42,7 +43,7 @@ class ProductController {
         stock,
       });
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",
@@ -68,7 +69,7 @@ class ProductController {
         });
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       return res
         .status(500)
         .json({ status: "error", msg: "Internal Server Error" });
@@ -92,7 +93,7 @@ class ProductController {
         payload: productCreated,
       });
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",
@@ -135,7 +136,7 @@ class ProductController {
         });
       }
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",
@@ -185,7 +186,7 @@ class ProductController {
         });
       }
     } catch (e) {
-      console.log(e);
+      logger.error(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",
