@@ -8,7 +8,7 @@
     "node": "16.x"
   },
   "scripts": {
-    "test": "mocha test/sessions.router.test.js",
+    "test": "mocha test/products.router.test.js",
     "dev": "nodemon ./src/apps.js --mode DEVELOPMENT",
     "start": "node ./src/apps.js --mode PRODUCTION"
   },

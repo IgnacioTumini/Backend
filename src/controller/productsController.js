@@ -93,7 +93,7 @@ class ProductController {
         payload: productCreated,
       });
     } catch (e) {
-      logger.error(e);
+      console.log(e);
       return res.status(500).json({
         status: "error",
         msg: "something went wrong :(",

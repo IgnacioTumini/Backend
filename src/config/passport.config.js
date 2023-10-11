@@ -77,7 +77,13 @@ const initializedPassport = () => {
             logger.error("User already No exits");
             return done(null, false);
           }
-          if (!isValidPassword(user, password)) return done(null, false);
+
+          if (!isValidPassword(user, password)) {
+            return done(null, false);
+          }
+
+          await UServices.update_connection(user._id);
+
           return done(null, user);
         } catch (error) {
           return done(null, false);
@@ -126,9 +132,14 @@ const initializedPassport = () => {
             };
             let userCreated = await userModel.create(newUser);
 
+            await UServices.update_connection(user._id);
+
             return done(null, userCreated);
           } else {
             logger.info("User already exists");
+
+            await UServices.update_connection(user._id);
+
             return done(null, user);
           }
         } catch (e) {

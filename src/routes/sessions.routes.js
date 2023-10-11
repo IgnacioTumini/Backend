@@ -5,15 +5,20 @@ import userModel from "../dao/Models/mongoose/users.models.js";
 import { createHast } from "../config.js";
 import UsersDTO from "../controller/DTO/users.dto.js";
 import { logger } from "../utils/logs/logger.js";
+import { UServices } from "../dao/Models/Service/users.service.js";
 
 const router = Router();
 router.use(cookieParser());
 
-router.get("/logout", (req, res) => {
+router.get("/logout", async (req, res) => {
+  let userId = req.session.user._id;
+  await UServices.update_connection(userId);
+
   req.session.destroy((error) => {
     if (error) {
       return res.status(400).json({ message: "No se pudo cerrar sesion" });
     }
+
     return res.redirect("/");
   });
 });
@@ -56,8 +61,6 @@ router.post(
   "/login",
   passport.authenticate("login", { failureRedirect: "/faillogin" }),
   async (req, res) => {
-    
-
     const { email, password, first_name, last_name, age, cid } = req.body;
 
     if (!req.user)

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { authenticate } from "../Middlewares/Authenticate.js";
+import { authenticate, checkAdmin } from "../Middlewares/Authenticate.js";
 import { PServices } from "../dao/Models/Service/productos.service.js";
 import { CServices } from "../dao/Models/Service/carts.service.js";
 import { userController } from "../controller/usersController.js";
@@ -29,6 +29,9 @@ router.get("/profile", authenticate, (req, res) => {
 //RENDER DE LOGIN
 router.get("/", (req, res) => {
   res.render("login");
+});
+router.get("/admin", checkAdmin, (req, res) => {
+  res.render("admin");
 });
 
 //CHATBOX

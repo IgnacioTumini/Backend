@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "carts",
   },
+  last_connection: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const userModel = mongoose.model(usersCollection, userSchema);

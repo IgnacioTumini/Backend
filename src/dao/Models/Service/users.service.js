@@ -40,6 +40,14 @@ class User {
     return result;
   };
 
+  update_connection = async (id) => {
+    const result = await userModel.updateOne(
+      { _id: id },
+      { last_connection: Date.now() }
+    );
+    return result;
+  };
+
   updateUser = async (id, user) => {
     delete user._id;
     let result = await userModel.updateOne({ _id: id }, { $set: user });
