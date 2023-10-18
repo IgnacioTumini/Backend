@@ -11,6 +11,15 @@ class UserController {
       });
     res.send({ status: "success", payload: users });
   };
+  getAllRender = async (req, res) => {
+    try {
+      const users = await UServices.getAll();
+
+      return res.status(200).render("users", { users });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   create = async (req, res) => {
     let { first_name, last_name, email, age, role, password } = req.body;
     if (!first_name || !last_name || !email || !age || !role)

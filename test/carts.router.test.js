@@ -1,4 +1,4 @@
-import { expect } from "chai";
+
 import { dropCarts } from "./setup.config.js";
 import supertest from "supertest";
 
