@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   width: 800px;
-  height: 60px !important;
+  height: 120px !important;
   align-items: center;
   justify-content: center;
   gap: 5px;
@@ -90,7 +90,7 @@
 }
 
 .card-user {
-  background-color: lightblue;
+  background-color: rgba(117, 175, 250, 0.822);
   display: flex;
   flex-direction: column;
   width: 800px;
@@ -98,7 +98,7 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  border: solid black;
+  border: solid rgba(10, 0, 156, 0.925);
   border-radius: 10px;
   flex-wrap: wrap;
   height: 50px;

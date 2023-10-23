@@ -4,16 +4,16 @@
   <h1>Usuarios</h1>
 
   {{#each users}}
-    <div class="card">
+    <div class="card-user">
 
       <div>Nombre y Apellido: {{this.first_name}} {{this.last_name}}</div>
       <div> Email: {{this.email}} </div>
       <div>Roll: {{this.role}} </div>
-      <a href=""><button class="btn btn-success">Cambiar roll</button></a>
-      <a href=""><button class="btn btn-danger">Eliminar </button></a>
+      <a href=""><button class="btn btn-success" data-user-id="{{_id}}">Cambiar
+          roll</button></a>
+      <a href=""><button class="btn btn-danger" data-user-id="{{_id}}">Eliminar
+        </button></a>
 
     </div>
   {{/each}}
 </div>
-
-<script src="../public/css/index.css"></script>
