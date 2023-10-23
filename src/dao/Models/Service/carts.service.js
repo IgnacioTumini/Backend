@@ -25,6 +25,7 @@ class Carts {
 
   addProductCart = async (cid, pid, Pquantity, email) => {
     try {
+      console.log("entre al services");
       const cart = await cartsModel.findById(cid);
       const product = await PServices.getProductById(pid);
 
@@ -50,6 +51,7 @@ class Carts {
         cart.products.push({ product: product._id, quantity: Pquantity });
       }
       await cart.save();
+
       const updatedCart = await cartsModel.findById(cid);
 
       return updatedCart;

@@ -42,8 +42,10 @@ router.get("/chat", authenticate, (req, res) => {
 router.get("/product/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
+
     const findProduct = await PServices.getProductById(pid);
     const cleanProduct = { id: findProduct._id.toString(), ...findProduct };
+    cleanProduct.cid = req.session.user.cid;
     delete cleanProduct._id;
     res.render("productDetail", { findProduct: cleanProduct });
   } catch (error) {
@@ -51,14 +53,16 @@ router.get("/product/:pid", async (req, res) => {
   }
 });
 // RENDER DEL CARRITO
-router.get("/cart-user", authenticate, async (req, res) => {
+router.get("/cart-user", async (req, res) => {
   try {
-    logger.error(req.session.user);
     let { _id } = req.session.user;
-
     let userFound = await userController.getUserById(_id);
+
     const cartFound = await CServices.getCartById(userFound.cid);
+    console.log(cartFound);
     const plainCart = cartFound.products.map((doc) => doc.toObject());
+    console.log(plainCart);
+
     return res.render("cart", { plainCart });
   } catch (e) {
     return res.render("error");

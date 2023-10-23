@@ -12,6 +12,7 @@ class TicketsController {
     try {
       const cid = req.params.cid;
       const user = req.session.user;
+      console.log(user);
       const response = await TServices.createTicket(cid, user);
       return res.json(response);
     } catch (error) {

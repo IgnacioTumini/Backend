@@ -9,11 +9,18 @@
       <div>Nombre y Apellido: {{this.first_name}} {{this.last_name}}</div>
       <div> Email: {{this.email}} </div>
       <div>Roll: {{this.role}} </div>
-      <a href=""><button class="btn btn-success" data-user-id="{{_id}}">Cambiar
-          roll</button></a>
-      <a href=""><button class="btn btn-danger" data-user-id="{{_id}}">Eliminar
-        </button></a>
+      <a href="http://localhost:8080/api/users/premium/{{this._id}}"><button
+          class="btn btn-success"
+        >Cambiar roll</button></a>
+      <button
+        id="deleteUser"
+        class="btn btn-danger"
+        data-user="{{this._id}}"
+      >Eliminar
+      </button>
 
     </div>
   {{/each}}
 </div>
+
+<script src="/js/deleteUser.js"></script>

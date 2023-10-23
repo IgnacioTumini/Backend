@@ -3,18 +3,24 @@
 
   {{#if findProduct}}
     {{#with findProduct}}
-      <div id={{id}} class="card">
+      <div id="card-product" class="card">
 
         <div>Nombre: {{title}}</div>
         <div>Descripcion:{{description}}</div>
         <div>Precio: ${{price}}</div>
         <div>Imagen: {{thumbnail}}</div>
         <div>Codigo: {{code}}</div>
-        <div>Stock: {{stock}}</div>
+        <div>Stock: {{stock}} </div>
         <div>Category: {{category}}</div>
 
       </div>
-      <a><button type="submit" class="btn btn-primary">Agregar al carrito</button></a>
+      <button
+        id="add-to-cart"
+        type="submit"
+        data-pid="{{id}}"
+        data-cid="{{cid}}"
+        class="btn btn-primary"
+      >Agregar al carrito</button>
 
     {{/with}}
 
@@ -23,3 +29,5 @@
   {{/if}}
 
 </div>
+
+<script src="/js/addProductToCart.js"></script>

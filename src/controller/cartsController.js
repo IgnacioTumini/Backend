@@ -21,6 +21,7 @@ class CartController {
 
   addProductCart = async (req, res) => {
     let cartId = req.params.cid;
+    console.log(cartId);
     let productId = req.params.pid;
     let email = req.session.user.email;
     const { Pquantity = 1 } = req.body;

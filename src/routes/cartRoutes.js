@@ -16,7 +16,7 @@ router.get("/:cid", cartController.getCartById);
 router.post("/", cartController.createCart);
 
 // POST AÑADE UN PRODUCTO A UN CARRITO, EN CASO DE QUE EXISTA, LE SUMA 1 A QUANTITY
-router.post("/:cid/product/:pid", checkUser, cartController.addProductCart);
+router.post("/:cid/product/:pid", cartController.addProductCart);
 
 //ELIMINAR TODOS LOS PRODUCTOS DEL CARRITO
 router.delete("/:cid", cartController.deleteCart);
