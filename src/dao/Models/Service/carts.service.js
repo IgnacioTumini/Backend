@@ -23,7 +23,7 @@ class Carts {
     return { message: "Carrito creado correctamente", cart: cart };
   };
 
-  addProductCart = async (cid, pid, Pquantity /*email*/) => {
+  async addProductCart(cid, pid, quantityParams) {
     try {
       const cart = await cartsModel.findById(cid);
       const product = await PServices.getProductById(pid);
@@ -34,31 +34,28 @@ class Carts {
       if (!product) {
         throw new Error("Product not found");
       }
-      /*if (email === product.owner) {
-        console.log("no podes agregar tu producto al carrito");
-        return null;
-      }*/
       const findProdInCart = await cartsModel.findOne({
+        _id: cid, // Agregar esta condición para buscar por el ID del carrito
         products: { $elemMatch: { product: pid } },
       });
 
       if (findProdInCart) {
         await cartsModel.updateOne(
           { _id: cid, "products.product": pid },
-          { $inc: { "products.$.quantity": Pquantity } }
+          { $inc: { "products.$.quantity": quantityParams } }
         );
       } else {
-        cart.products.push({ product: product._id, quantity: Pquantity });
+        cart.products.push({ product: pid, quantity: quantityParams });
       }
-      await cart.save();
 
+      await cart.save();
       const updatedCart = await cartsModel.findById(cid);
 
       return updatedCart;
     } catch (error) {
-      throw logger.error("No se pudo agregar el producto al carrito");
+      throw error;
     }
-  };
+  }
   getCartById = async (cid) => {
     const findCart = await cartsModel
       .findById(cid)

@@ -11,11 +11,14 @@ class TicketsController {
   createTicket = async (req, res) => {
     try {
       const cid = req.params.cid;
-      console.log(cid);
+
       const user = req.session.user;
+
       const response = await TServices.createTicket(cid, user);
+      console.log(response);
       return res.json(response);
     } catch (error) {
+      console.log(error);
       res.send("error se pudrio todo");
     }
   };

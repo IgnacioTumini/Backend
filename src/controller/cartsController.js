@@ -22,17 +22,11 @@ class CartController {
   addProductCart = async (req, res) => {
     try {
       const cid = req.params.cid;
-      //console.log(cid);
       const pid = req.params.pid;
-      //console.log(pid);
-      //const email = req.session.user.email;
-      //console.log(email);
 
       const { quantity = 1 } = req.body;
       const productById = await PServices.getProductById(pid);
-      //console.log(productById);
       const thisCart = await CServices.getCartById(cid);
-      //console.log(thisCart);
 
       if (!thisCart) {
         return res.status(400).json({
