@@ -75,8 +75,42 @@ class ProductController {
         .json({ status: "error", msg: "Internal Server Error" });
     }
   };
-  create = async (req, res) => {
+  createProduct = async (req, res) => {
     try {
+      const { title, description, price, thumbnail, code, stock } = req.body;
+
+      let productDTO = new ProductsDTO({
+        title,
+        description,
+        price,
+        thumbnail,
+        code,
+        stock,
+      });
+
+      const productCreated = PServices.createProduct(productDTO);
+
+      return res.status(201).json({
+        status: "success",
+        msg: "product created",
+        payload: {
+          title: productCreated.title,
+          description: productCreated.description,
+          price: productCreated.price,
+          thumbnail: productCreated.thumbnail,
+          code: productCreated.code,
+          stock: productCreated.stock,
+        },
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: "error",
+        msg: "something went wrong :(",
+        payload: {},
+      });
+    }
+
+    /*try {
       let newProduct = req.body;
       newProduct.owner =
         req.session.role === "admin"
@@ -99,8 +133,9 @@ class ProductController {
         msg: "something went wrong :(",
         payload: {},
       });
-    }
+    }*/
   };
+
   update = async (req, res) => {
     try {
       const { id } = req.params;

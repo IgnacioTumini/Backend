@@ -14,12 +14,12 @@ addButton.forEach((button) => {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response, e.g., display a success message
-        console.log("Producto agregado al carrito");
+        console.log("Producto agregado");
         console.log("Response is:", data);
       })
       .catch((error) => {
         // Handle any errors
-        console.error("Error al agregar al carrito:", error);
+        console.error("Error adding product to cart:", error);
       });
   });
 });

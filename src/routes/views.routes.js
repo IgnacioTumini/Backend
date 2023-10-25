@@ -42,14 +42,27 @@ router.get("/chat", authenticate, (req, res) => {
 router.get("/product/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
+    const cid = req.session.user.cid;
 
-    const findProduct = await PServices.getProductById(pid);
-    const cleanProduct = { id: findProduct._id.toString(), ...findProduct };
-    cleanProduct.cid = req.session.user.cid;
-    delete cleanProduct._id;
-    res.render("productDetail", { findProduct: cleanProduct });
-  } catch (error) {
-    res.render("error");
+    const productFound = await PServices.getProductById(pid);
+    const plainProduct = {
+      _id: productFound._id.toString(),
+      title: productFound.title,
+      description: productFound.description,
+      price: productFound.price,
+      thumbnail: productFound.thumbnail,
+      code: productFound.code,
+      stock: productFound.stock,
+      category: productFound.category,
+      cid: cid,
+    };
+    return res.render("productDetail", { plainProduct });
+  } catch (e) {
+    let data = {
+      title: "Error inesperado",
+      text: "intentelo otra vez",
+    };
+    return res.render("error", data);
   }
 });
 // RENDER DEL CARRITO

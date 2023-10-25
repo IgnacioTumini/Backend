@@ -37,6 +37,7 @@ const initializedPassport = () => {
               last_name,
               email,
               age,
+              role,
               password: createHast(password),
               role: "admin",
               cid: userCart.cart._id.toString(),
@@ -49,6 +50,7 @@ const initializedPassport = () => {
               last_name,
               email,
               age,
+              role,
               password: createHast(password),
               cid: userCart.cart._id.toString(),
             };

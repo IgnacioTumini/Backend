@@ -23,7 +23,7 @@ class Carts {
     return { message: "Carrito creado correctamente", cart: cart };
   };
 
-  addProductCart = async (cid, pid, Pquantity, email) => {
+  addProductCart = async (cid, pid, Pquantity /*email*/) => {
     try {
       const cart = await cartsModel.findById(cid);
       const product = await PServices.getProductById(pid);
@@ -34,10 +34,10 @@ class Carts {
       if (!product) {
         throw new Error("Product not found");
       }
-      if (email === product.owner) {
+      /*if (email === product.owner) {
         console.log("no podes agregar tu producto al carrito");
         return null;
-      }
+      }*/
       const findProdInCart = await cartsModel.findOne({
         products: { $elemMatch: { product: pid } },
       });

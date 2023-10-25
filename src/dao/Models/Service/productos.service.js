@@ -106,15 +106,36 @@ class Products {
 
     return products;
   }
-
+  async createProduct({
+    title,
+    description,
+    price,
+    thumbnail,
+    code,
+    stock,
+    category,
+  }) {
+    const productCreated = await productsModel.create({
+      title,
+      description,
+      price,
+      thumbnail,
+      code,
+      stock,
+      category,
+    });
+    return productCreated;
+  }
+  /*
   async create(product) {
+    
     try {
       const response = await productsModel.create(product);
       return { status: 200, message: `Product added.`, payload: response };
     } catch (error) {
       throw error;
     }
-  }
+  }*/
   async getProductById(pid) {
     const producById = await productsModel.findOne(
       { _id: pid },

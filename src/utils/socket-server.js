@@ -14,7 +14,7 @@ export function connectSocketServer(httpServer) {
     logger.info("Cliente conectado: " + socket.id);
     socket.on("new-product", async (newProduct) => {
       try {
-        await PServices.create(newProduct);
+        await PServices.createProduct(newProduct);
         const newProductList = await PServices.getProductRealTime();
         socketServer.emit("products", newProductList);
       } catch (error) {

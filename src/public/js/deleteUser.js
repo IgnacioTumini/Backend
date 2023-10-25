@@ -15,7 +15,6 @@ deleteUserButtons.forEach((button) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the response, e.g., display a success message
         console.log("Usuario borrado");
         console.log("Response is:", data);
       })

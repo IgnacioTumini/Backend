@@ -1,28 +1,26 @@
 <div class="products-container">
   <h1>Detalle del producto</h1>
 
-  {{#if findProduct}}
-    {{#with findProduct}}
-      <div id="card-product" class="card">
+  {{#if plainProduct}}
 
-        <div>Nombre: {{title}}</div>
-        <div>Descripcion:{{description}}</div>
-        <div>Precio: ${{price}}</div>
-        <div>Imagen: {{thumbnail}}</div>
-        <div>Codigo: {{code}}</div>
-        <div>Stock: {{stock}} </div>
-        <div>Category: {{category}}</div>
+    <div id="card-product" class="card">
 
-      </div>
-      <button
-        id="add-to-cart"
-        type="submit"
-        data-pid="{{id}}"
-        data-cid="{{cid}}"
-        class="btn btn-primary"
-      >Agregar al carrito</button>
+      <div>Nombre: {{plainProduct.title}}</div>
+      <div>Descripcion:{{plainProduct.description}}</div>
+      <div>Precio: ${{plainProduct.price}}</div>
+      <div>Imagen: {{plainProduct.thumbnail}}</div>
+      <div>Codigo: {{plainProduct.code}}</div>
+      <div>Stock: {{plainProduct.stock}} </div>
+      <div>Category: {{plainProduct.category}}</div>
 
-    {{/with}}
+    </div>
+    <button
+      id="add-to-cart"
+      type="submit"
+      data-pid="{{plainProduct._id}}"
+      data-cid="{{plainProduct.cid}}"
+      class="btn btn-primary"
+    >Agregar al carrito</button>
 
   {{else}}
     <p>El producto no existe o no se encontró.</p>
