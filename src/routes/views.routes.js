@@ -63,9 +63,13 @@ router.get("/cart-user", async (req, res) => {
     const plainCart = cartFound.products.map((doc) => doc.toObject());
     console.log(plainCart);
 
-    return res.render("cart", { plainCart });
+    return res.render("cart", { plainCart, cid: cartFound._id.toString() });
   } catch (e) {
-    return res.render("error");
+    let data = {
+      title: "Error inesperado",
+      text: "intentelo otra vez",
+    };
+    return res.render("error", data);
   }
 });
 

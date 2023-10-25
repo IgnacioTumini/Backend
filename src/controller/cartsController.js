@@ -20,8 +20,57 @@ class CartController {
   };
 
   addProductCart = async (req, res) => {
-    let cartId = req.params.cid;
-    console.log(cartId);
+    try {
+      const cid = req.params.cid;
+      console.log(cid);
+      const pid = req.params.pid;
+      console.log(pid);
+      let email = req.session.user.email;
+      const { quantity = 1 } = req.body;
+      //checkUserCart();
+      const productById = await PServices.getProductById(pid);
+      const thisCart = await CServices.getCartById(cid);
+
+      if (!thisCart) {
+        return res.status(400).json({
+          status: "error",
+          msg: "No se encontro el cart",
+        });
+      }
+
+      if (productById) {
+        const addProduct = await CServices.addProductCart(
+          cid,
+          pid,
+          quantity,
+          email
+        );
+        if (addProduct) {
+          return res.status(201).json({
+            status: "success",
+            msg: "product added to cart",
+            payload: addProduct,
+          });
+        } else {
+          return res.status(400).json({
+            status: "error",
+            msg: "The product was not added to the cart",
+          });
+        }
+      } else {
+        return res
+          .status(400)
+          .json({ status: "error", msg: "No product found to add to cart" });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: "error",
+        msg: "could not add product to cart",
+        error: error.message,
+      });
+    }
+
+    /*let cartId = req.params.cid;
     let productId = req.params.pid;
     let email = req.session.user.email;
     const { Pquantity = 1 } = req.body;
@@ -31,7 +80,7 @@ class CartController {
       Pquantity,
       email
     );
-    res.send(addProduct);
+    res.send(addProduct);*/
   };
 
   deleteCart = async (req, res) => {

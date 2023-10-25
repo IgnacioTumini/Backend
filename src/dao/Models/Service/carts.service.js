@@ -25,7 +25,6 @@ class Carts {
 
   addProductCart = async (cid, pid, Pquantity, email) => {
     try {
-      console.log("entre al services");
       const cart = await cartsModel.findById(cid);
       const product = await PServices.getProductById(pid);
 
@@ -36,7 +35,8 @@ class Carts {
         throw new Error("Product not found");
       }
       if (email === product.owner) {
-        return { message: "No podes comprar tu propio producto" };
+        console.log("no podes agregar tu producto al carrito");
+        return null;
       }
       const findProdInCart = await cartsModel.findOne({
         products: { $elemMatch: { product: pid } },
