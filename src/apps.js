@@ -17,7 +17,11 @@ import productRouter from "./routes/productRoutes.js";
 import sessionRouter from "./routes/sessions.routes.js";
 import cookierRouter from "./routes/cookies.routes.js";
 import userRouter from "./routes/users.routes.js";
-import { authenticate, checkAdmin } from "./Middlewares/Authenticate.js";
+import {
+  PublishCredentials,
+  authenticate,
+  checkAdmin,
+} from "./Middlewares/Authenticate.js";
 import initializedPassport from "./config/passport.config.js";
 import homeRouter from "./routes/homeRoutes.js";
 import env from "./config/enviroment.config.js";
@@ -74,7 +78,7 @@ app.use("/api/users", userRouter);
 // FIN API ROUTES //
 
 // ROUTES RENDERS //
-app.use("/realtimeproducts", authenticate, checkAdmin, realTimeProductsRoutes);
+app.use("/realtimeproducts", realTimeProductsRoutes);
 app.use("/", homeRouter);
 app.use("/", viewsRouter);
 app.use("/cookie", cookierRouter);

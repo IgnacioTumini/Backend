@@ -106,7 +106,7 @@ class Products {
 
     return products;
   }
-  async createProduct({
+  /*async createProduct({
     title,
     description,
     price,
@@ -125,17 +125,16 @@ class Products {
       category,
     });
     return productCreated;
-  }
-  /*
-  async create(product) {
-    
+  }*/
+
+  async createProduct(product) {
     try {
       const response = await productsModel.create(product);
       return { status: 200, message: `Product added.`, payload: response };
     } catch (error) {
       throw error;
     }
-  }*/
+  }
   async getProductById(pid) {
     const producById = await productsModel.findOne(
       { _id: pid },

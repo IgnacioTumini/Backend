@@ -1,26 +1,29 @@
 <!-- LISTADO DE USUARIOS -->
 
-<div class="users_container">
+<div class="user_body">
   <h1>Usuarios</h1>
+  <div class="users_container">
+    {{#each users}}
+      <div class="card-user">
 
-  {{#each users}}
-    <div class="card-user">
+        <div>Nombre y Apellido: {{this.first_name}} {{this.last_name}}</div>
+        <div> Email: {{this.email}} </div>
+        <div>Roll: {{this.role}} </div>
+        <a href="http://localhost:8080/api/users/premium/{{this._id}}"><button
+            class="btn btn-success"
+          >Cambiar roll</button></a>
+        <button
+          id="deleteUser"
+          class="btn btn-danger"
+          data-user="{{this._id}}"
+        >Eliminar
+        </button>
 
-      <div>Nombre y Apellido: {{this.first_name}} {{this.last_name}}</div>
-      <div> Email: {{this.email}} </div>
-      <div>Roll: {{this.role}} </div>
-      <a href="http://localhost:8080/api/users/premium/{{this._id}}"><button
-          class="btn btn-success"
-        >Cambiar roll</button></a>
-      <button
-        id="deleteUser"
-        class="btn btn-danger"
-        data-user="{{this._id}}"
-      >Eliminar
-      </button>
+      </div>
+    {{/each}}
 
-    </div>
-  {{/each}}
+  </div>
+
 </div>
 
 <script src="/js/deleteUser.js"></script>

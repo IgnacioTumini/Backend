@@ -34,6 +34,7 @@ class Carts {
       if (!product) {
         throw new Error("Product not found");
       }
+
       const findProdInCart = await cartsModel.findOne({
         _id: cid, // Agregar esta condición para buscar por el ID del carrito
         products: { $elemMatch: { product: pid } },

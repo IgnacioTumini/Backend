@@ -1,11 +1,10 @@
 const deleteUserButtons = document.querySelectorAll("#deleteUser");
-console.log("afuera del event");
 
 deleteUserButtons.forEach((button) => {
   button.addEventListener("click", () => {
     // Get the product's ID from a data attribute on the button
     const userId = button.dataset.user;
-    console.log("entro");
+
     // Make a fetch request to add the product to the cart using the productId
     fetch(`http://localhost:8080/api/users/${userId}`, {
       method: "DELETE",
@@ -15,6 +14,10 @@ deleteUserButtons.forEach((button) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        Swal.fire({
+          icon: "success",
+          title: "Usuario eliminado, por favor refresque la pagina!",
+        });
         console.log("Usuario borrado");
         console.log("Response is:", data);
       })

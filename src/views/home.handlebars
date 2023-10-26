@@ -1,31 +1,34 @@
 <!--IMPRIMIR LA LISTA DE PRODUCTOS HASTA EL MOMENTO-->
 
-<div class="products-container">
+<div class="product_body">
   <h1>Productos en stock</h1>
+  <div class="products-container">
+    {{#each products}}
+      <div id={{this._id}} class="card">
 
-  {{#each products}}
-    <div id={{this._id}} class="card">
+        <div>Nombre: {{this.title}}</div>
+        <div>Descripcion: {{this.description}}</div>
+        <div>Precio: ${{this.price}}</div>
 
-      <div>Nombre: {{this.title}}</div>
-      <div>Descripcion: {{this.description}}</div>
-      <div>Precio: ${{this.price}}</div>
+        <a href="/product/{{this._id}}"><button class="btn btn-primary">Ver más</button></a>
+      </div>
+    {{/each}}
 
-      <a href="/product/{{this._id}}"><button class="btn btn-primary">Ver más</button></a>
+    <div>
+      {{#if response.payload.hasPrevPage}}
+        <a href="{{response.payload.prevPageURL}}"><button>Anterior</button></a>
+      {{/if}}
+      {{#if response}}<span>Pagina
+          {{response.payload.page}}
+          de
+          {{response.payload.totalPages}}</span>
+      {{/if}}
+      {{#if response.payload.hasNextPage}}
+        <a href="{{response.payload.nextPageURL}}"><button
+          >Siguiente</button></a>
+      {{/if}}
     </div>
-  {{/each}}
 
-  <div>
-    {{#if response.payload.hasPrevPage}}
-      <a href="{{response.payload.prevPageURL}}"><button>Anterior</button></a>
-    {{/if}}
-    {{#if response}}<span>Pagina
-        {{response.payload.page}}
-        de
-        {{response.payload.totalPages}}</span>
-    {{/if}}
-    {{#if response.payload.hasNextPage}}
-      <a href="{{response.payload.nextPageURL}}"><button>Siguiente</button></a>
-    {{/if}}
   </div>
 
 </div>

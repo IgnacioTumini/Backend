@@ -13,6 +13,12 @@ addButton.forEach((button) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        Swal.fire({
+          icon: "success",
+          title: "Producto agregado al carrito!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
         // Handle the response, e.g., display a success message
         console.log("Producto agregado");
         console.log("Response is:", data);

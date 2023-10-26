@@ -23,6 +23,7 @@ class CartController {
     try {
       const cid = req.params.cid;
       const pid = req.params.pid;
+      let email = req.session.user.email;
 
       const { quantity = 1 } = req.body;
       const productById = await PServices.getProductById(pid);
@@ -39,8 +40,8 @@ class CartController {
         const addProduct = await CServices.addProductCart(
           cid,
           pid,
-          quantity
-          //email
+          quantity,
+          email
         );
         if (addProduct) {
           return res.status(201).json({

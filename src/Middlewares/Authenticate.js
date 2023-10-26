@@ -24,7 +24,7 @@ export function checkUser(req, res, next) {
 }
 // agregar productos admin y premium
 export function PublishCredentials(req, res, next) {
-  if (req.session.user.role == "admin" || "premium") {
+  if (req.session.user.role == "admin" || req.session.user.role == "premium") {
     return next();
   } else {
     return res.render("error");

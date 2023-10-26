@@ -76,7 +76,7 @@ class ProductController {
     }
   };
   createProduct = async (req, res) => {
-    try {
+    /*try {
       const { title, description, price, thumbnail, code, stock } = req.body;
 
       let productDTO = new ProductsDTO({
@@ -108,9 +108,9 @@ class ProductController {
         msg: "something went wrong :(",
         payload: {},
       });
-    }
+    }*/
 
-    /*try {
+    try {
       let newProduct = req.body;
       newProduct.owner =
         req.session.role === "admin"
@@ -133,7 +133,7 @@ class ProductController {
         msg: "something went wrong :(",
         payload: {},
       });
-    }*/
+    }
   };
 
   update = async (req, res) => {

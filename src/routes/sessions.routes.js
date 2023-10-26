@@ -84,7 +84,7 @@ router.post(
 );
 router.get("/current", async (req, res) => {
   let user = req.session.user;
-  console.log(user);
+  
   let userDTO = new UsersDTO(user);
   res.send({ message: "User", payload: userDTO });
 });
