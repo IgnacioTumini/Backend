@@ -14,7 +14,6 @@ router.put("/:id", userController.update);
 router.delete("/:id", userController.delete);
 //cambio de roll
 router.get("/premium/:uid", checkAdmin, userController.updateRole);
-//Eliminar users por inactividad de 2hs
-router.get("/deleteInactive", userController.deleteInactive);
+
 
 export default router;

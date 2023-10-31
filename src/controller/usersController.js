@@ -99,7 +99,7 @@ class UserController {
     try {
       let result = await UServices.deleteInactive();
       console.log(result);
-      res.render("users");
+      res.redirect("/users");
     } catch (e) {
       logger.error("error en controller de USERS, funcion de userManager");
       res.send("Error, vuelve a intentarlo");

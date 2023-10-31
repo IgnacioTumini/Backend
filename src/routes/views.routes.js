@@ -11,6 +11,9 @@ import { logger } from "../utils/logs/logger.js";
 
 const router = Router();
 
+//Eliminar users por inactividad de 2hs
+router.get("/deleteInactive", userController.deleteInactive);
+
 //RENDER DE REGISTRO
 router.get("/register", (req, res) => {
   res.render("register");
@@ -72,7 +75,6 @@ router.get("/cart-user", async (req, res) => {
     let userFound = await userController.getUserById(_id);
     const cartFound = await CServices.getCartById(userFound.cid);
     const plainCart = cartFound.products.map((doc) => doc.toObject());
-    
 
     return res.render("cart", { plainCart, cid: cartFound._id.toString() });
   } catch (e) {
