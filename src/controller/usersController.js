@@ -94,6 +94,18 @@ class UserController {
     const user = await UServices.getUserById(id);
     return user;
   }
+
+  deleteInactive = async (req, res) => {
+    try {
+      let result = await UServices.deleteInactive();
+      console.log(result);
+      res.render("users");
+    } catch (e) {
+      logger.error("error en controller de USERS, funcion de userManager");
+      res.send("Error, vuelve a intentarlo");
+    }
+  };
+
   delete = async (req, res) => {
     try {
       const { id } = req.params;

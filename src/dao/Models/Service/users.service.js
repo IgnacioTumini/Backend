@@ -75,6 +75,16 @@ class User {
       }
     }
   };
+  deleteInactive = async () => {
+    const now = new Date();
+    const twoDaysAgo = new Date(now - 2 * 24 * 60 * 60 * 1000);
+
+    const result = await userModel.deleteMany({
+      last_connection: { $lt: twoDaysAgo },
+      role: { $ne: "admin" },
+    });
+    return result;
+  };
 
   authentication = async (username, password) => {
     try {
