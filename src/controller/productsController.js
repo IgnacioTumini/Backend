@@ -31,6 +31,7 @@ class ProductController {
           code: product.code,
           stock: product.stock,
           category: product.category,
+          owner: product.owner,
         };
       });
       return res.status(200).render("home", {
@@ -76,50 +77,21 @@ class ProductController {
     }
   };
   createProduct = async (req, res) => {
-    /*try {
-      const { title, description, price, thumbnail, code, stock } = req.body;
-
-      let productDTO = new ProductsDTO({
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
-      });
-
-      const productCreated = PServices.createProduct(productDTO);
-
-      return res.status(201).json({
-        status: "success",
-        msg: "product created",
-        payload: {
-          title: productCreated.title,
-          description: productCreated.description,
-          price: productCreated.price,
-          thumbnail: productCreated.thumbnail,
-          code: productCreated.code,
-          stock: productCreated.stock,
-        },
-      });
-    } catch (e) {
-      return res.status(500).json({
-        status: "error",
-        msg: "something went wrong :(",
-        payload: {},
-      });
-    }*/
-
+    // ESTE CONTROLLER NO ESTA EN PRODUCCION, YA QUE A LA HORA DE CREAR UN PRODUCTO POR REALTIME(SOCKET)
+    // YA QUE ESTE SISTEMA NO ES COMPATIBLE CON FUNCIONALIDAES COMO REQ.SESSION, Y ESTO ME TRAJO PROBLEMAS,
+    // YA QUE NO PUEDO HACER LO DE OWNER
     try {
+      console.log(req.session.user.role);
       let newProduct = req.body;
-      newProduct.owner =
-        req.session.role === "admin"
-          ? req.session.role
-          : req.session.user.email;
+
+      req.session.user.role === "admin"
+        ? (newProduct.owner = "admin")
+        : (newProduct.owner = req.session.user.email);
 
       let productsDTO = new ProductsDTO(newProduct);
+      console.log(productsDTO);
 
-      const productCreated = await PServices.create(productsDTO);
+      const productCreated = await PServices.createProduct(productsDTO);
 
       return res.status(201).json({
         status: "success",

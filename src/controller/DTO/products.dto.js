@@ -7,5 +7,6 @@ export default class ProductsDTO {
     this.price = product.price;
     this.stock = product.stock;
     this.thumbnail = product.thumbnail;
+    this.owner = product.owner;
   }
 }

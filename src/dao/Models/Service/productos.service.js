@@ -3,7 +3,7 @@ import productsModel from "../mongoose/products.models.js";
 class Products {
   constructor() {}
   getAll = async (queryParams) => {
-    const { limit = 10, page = 1, sort, category, stock } = queryParams;
+    const { limit = 6, page = 1, sort, category, stock } = queryParams;
 
     let result = await productsModel.paginate(
       {},
