@@ -5,7 +5,7 @@ addButton.forEach((button) => {
     const productid = button.dataset.pid;
     const cartid = button.dataset.cid;
 
-    fetch(`http://localhost:8080/api/carts/${cartid}/product/${productid}`, {
+    fetch(`/api/carts/${cartid}/product/${productid}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
