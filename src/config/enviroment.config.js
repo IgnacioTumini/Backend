@@ -24,4 +24,7 @@ export default {
   gmail: process.env.GOOGLE_EMAIL,
   pass: process.env.GOOGLE_PASS,
   loggerLevel: process.env.LOGGER_LEVEL,
+  clientID: process.env.CLIENT_GITHUB_ID,
+  clientSecret: process.env.CLIENT_GITHUB_SECRET,
+  callbackURL: process.env.CALLBACK_URL,
 };

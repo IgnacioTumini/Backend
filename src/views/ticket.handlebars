@@ -1,0 +1,14 @@
+<h1>COMPRA FINALIZADA</h1>
+{{#if response}}
+
+  {{#each response}}
+
+    <p>{{this.message}}</p>
+    <p>{{this.payload}}</p>
+
+  {{/each}}
+
+  <a class="btn btn-primary" href="/api/carts/{{cid}}/purchase">Realizar compra</a>
+{{else}}
+  <h1>No se pudo efectuar la compra</h1>
+{{/if}}
